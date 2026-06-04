@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سینما خانگی | پنل مدیریت</title>
+    <title>سینما خانگی | دانلود فیلم و سریال</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,6 @@
             color: #fff;
         }
 
-        /* صفحه ورود */
         .login-page, .app-page, .admin-page {
             min-height: 100vh;
         }
@@ -116,7 +115,6 @@
             font-size: 0.85rem;
         }
 
-        /* هدر اصلی */
         .main-header {
             background: linear-gradient(135deg, rgba(180, 20, 30, 0.3), rgba(0, 0, 0, 0.7));
             border-radius: 30px;
@@ -162,7 +160,6 @@
             padding: 20px;
         }
 
-        /* بنر */
         .hero-banner {
             margin-bottom: 30px;
             border-radius: 30px;
@@ -191,10 +188,8 @@
             color: transparent;
             font-size: 1.4rem;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-            letter-spacing: 1px;
         }
 
-        /* گرید فیلم‌ها */
         .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -279,7 +274,6 @@
             border-top: 1px solid #332222;
         }
 
-        /* صفحه ادمین جداگانه */
         .admin-page {
             display: none;
             padding: 20px;
@@ -308,31 +302,6 @@
             border: 1px solid #ff3333;
         }
 
-        .add-user-form {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .add-user-form input {
-            flex: 1;
-            padding: 12px 18px;
-            background: #2a0a0a;
-            border: 1px solid #cc3333;
-            border-radius: 30px;
-            color: white;
-        }
-
-        .add-user-form button {
-            background: #cc0000;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-        }
-
         .users-table {
             overflow-x: auto;
         }
@@ -352,15 +321,6 @@
             color: #ffaaaa;
         }
 
-        .delete-btn {
-            background: #8b0000;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 20px;
-            color: white;
-            cursor: pointer;
-        }
-
         .back-to-site {
             background: #2a0a0a;
             border: 1px solid #cc3333;
@@ -368,6 +328,18 @@
             border-radius: 30px;
             color: white;
             cursor: pointer;
+        }
+
+        .download-code-btn {
+            background: #2ea043;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
@@ -382,7 +354,6 @@
 </head>
 <body>
 
-<!-- صفحه ورود -->
 <div id="loginPage" class="login-page">
     <div class="login-container">
         <div class="login-box">
@@ -404,7 +375,6 @@
     </div>
 </div>
 
-<!-- صفحه اصلی سایت -->
 <div id="appPage" class="app-page" style="display: none;">
     <div class="container">
         <div class="main-header">
@@ -431,61 +401,139 @@
     </div>
 </div>
 
-<!-- صفحه پنل مدیریت (جداگانه) -->
 <div id="adminPage" class="admin-page">
     <div class="admin-container">
         <div class="admin-header">
-            <h3 style="color:#ff8888;">👑 پنل مدیریت کاربران</h3>
+            <h3 style="color:#ff8888;">👑 پنل مدیریت - گزارش ورود کاربران</h3>
             <button class="back-to-site" onclick="showMainPage()">↩️ بازگشت به سایت</button>
         </div>
+        
         <div class="admin-panel-box">
-            <div class="add-user-form">
-                <input type="text" id="newUsername" placeholder="نام کاربری جدید">
-                <input type="text" id="newPassword" placeholder="رمز عبور">
-                <button onclick="addUser()">➕ افزودن کاربر</button>
-            </div>
             <div class="users-table">
                 <table>
                     <thead>
-                        <tr><th>نام کاربری</th><th>نوع</th><th>آخرین ورود</th><th>عملیات</th></tr>
+                        <tr><th>نام کاربری</th><th>نوع کاربر</th><th>آخرین زمان ورود</th></tr>
                     </thead>
                     <tbody id="usersTableBody"></tbody>
                 </table>
             </div>
+            <button class="download-code-btn" onclick="downloadUpdatedCode()">📥 دانلود کد به‌روز شده (برای آپلود روی گیت‌هاب)</button>
+            <p style="font-size: 0.75rem; color: #888; margin-top: 15px; text-align: center;">
+                🔒 بعد از تغییر لینک فیلم‌ها در کد، این دکمه رو بزن تا فایل HTML جدید دانلود بشه. سپس فایل رو روی گیت‌هاب آپلود کن.
+            </p>
         </div>
     </div>
 </div>
 
 <script>
-    // دیتابیس کاربران
+    // ==========================================
+    // ✅ لینک فیلم و سریال ها (اینجا رو عوض کن)
+    // ==========================================
+    let moviesData = [
+        {
+            id: 1,
+            title: "سریال گل سنگ",
+            type: "سریال",
+            image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp",
+            downloadLink: "",  // لینک دانلود رو اینجا بذار
+            watchLink: "",     // لینک تماشای آنلاین رو اینجا بذار
+            downloadTitle: "دانلود سریال گل سنگ",
+            watchTitle: "تماشای آنلاین گل سنگ"
+        },
+        {
+            id: 2,
+            title: "سریال بی عاطفه",
+            type: "سریال",
+            image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg",
+            downloadLink: "",
+            watchLink: "",
+            downloadTitle: "دانلود سریال بی عاطفه",
+            watchTitle: "تماشای آنلاین بی عاطفه"
+        },
+        {
+            id: 3,
+            title: "سریال بیست و یک",
+            type: "سریال",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnQWgP4VBNgnXCM_RbsWnGW0NohgRNdxbZxG4zPZWc53wv9tD8s2h4pk&s=10",
+            downloadLink: "",
+            watchLink: "",
+            downloadTitle: "دانلود سریال بیست و یک",
+            watchTitle: "تماشای آنلاین بیست و یک"
+        },
+        {
+            id: 4,
+            title: "سریال هزار و یک شب",
+            type: "سریال",
+            image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80",
+            downloadLink: "",
+            watchLink: "",
+            downloadTitle: "دانلود سریال هزار و یک شب",
+            watchTitle: "تماشای آنلاین هزار و یک شب"
+        },
+        {
+            id: 5,
+            title: "سریال بدنام",
+            type: "سریال",
+            image: "https://static.cdn.asset.filimo.com/flmt/mov_174988_343591.jpg?width=300&quality=85&sharpen=80&secret=ZaRTIhChiq5rD660aRzxNw",
+            downloadLink: "",
+            watchLink: "",
+            downloadTitle: "دانلود سریال بدنام",
+            watchTitle: "تماشای آنلاین بدنام"
+        },
+        {
+            id: 6,
+            title: "سریال مو به مو",
+            type: "سریال",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkX72DwIPWEuz_0ETODdFnEM_HBYcq4VN9MjpdH1pZ8ipW5-sItCTQTUlI&s=10",
+            downloadLink: "",
+            watchLink: "",
+            downloadTitle: "دانلود سریال مو به مو",
+            watchTitle: "تماشای آنلاین مو به مو"
+        },
+        {
+            id: 7,
+            title: "سریال From",
+            type: "سریال",
+            image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100",
+            downloadLink: "",
+            watchLink: "",
+            downloadTitle: "دانلود سریال From",
+            watchTitle: "تماشای آنلاین From"
+        }
+    ];
+
+    // ==========================================
+    // ✅ لیست کاربران (اینجا یوزر و رمز جدید اضافه کن)
+    // ==========================================
     let users = [
-        { username: "حمیدرضا", password: "CTF_22", role: "admin", lastLogin: "" }
+        { username: "حمیدرضا", password: "CTF_22", role: "admin", lastLogin: "" },
+        // { username: "احمد", password: "123", role: "user", lastLogin: "" },
+        // { username: "سارا", password: "456", role: "user", lastLogin: "" }
     ];
 
     let currentUser = null;
 
-    // سریال‌ها
-    const moviesData = [
-        { id: 1, title: "سریال گل سنگ", type: "سریال", image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp", downloadLink: "", watchLink: "" },
-        { id: 2, title: "سریال بی عاطفه", type: "سریال", image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg", downloadLink: "", watchLink: "" },
-        { id: 3, title: "سریال بیست و یک", type: "سریال", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnQWgP4VBNgnXCM_RbsWnGW0NohgRNdxbZxG4zPZWc53wv9tD8s2h4pk&s=10", downloadLink: "", watchLink: "" },
-        { id: 4, title: "سریال هزار و یک شب", type: "سریال", image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80", downloadLink: "", watchLink: "" },
-        { id: 5, title: "سریال بدنام", type: "سریال", image: "https://static.cdn.asset.filimo.com/flmt/mov_174988_343591.jpg?width=300&quality=85&sharpen=80&secret=ZaRTIhChiq5rD660aRzxNw", downloadLink: "", watchLink: "" },
-        { id: 6, title: "سریال مو به مو", type: "سریال", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkX72DwIPWEuz_0ETODdFnEM_HBYcq4VN9MjpdH1pZ8ipW5-sItCTQTUlI&s=10", downloadLink: "", watchLink: "" },
-        { id: 7, title: "سریال From", type: "سریال", image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100", downloadLink: "", watchLink: "" }
-    ];
-
+    // ========== توابع ذخیره و بارگذاری ==========
     function loadUsers() {
-        const saved = localStorage.getItem("cinema_users");
-        if (saved) {
-            users = JSON.parse(saved);
-        } else {
-            saveUsers();
+        const savedLastLogins = localStorage.getItem("cinema_lastLogins");
+        if (savedLastLogins) {
+            const lastLogins = JSON.parse(savedLastLogins);
+            users.forEach(user => {
+                if (lastLogins[user.username]) {
+                    user.lastLogin = lastLogins[user.username];
+                }
+            });
         }
     }
 
-    function saveUsers() {
-        localStorage.setItem("cinema_users", JSON.stringify(users));
+    function saveLastLogins() {
+        const lastLogins = {};
+        users.forEach(user => {
+            if (user.lastLogin) {
+                lastLogins[user.username] = user.lastLogin;
+            }
+        });
+        localStorage.setItem("cinema_lastLogins", JSON.stringify(lastLogins));
     }
 
     function updateLastLogin(username) {
@@ -493,10 +541,64 @@
         if (user) {
             const now = new Date();
             user.lastLogin = `${now.toLocaleDateString('fa-IR')} - ${now.toLocaleTimeString('fa-IR')}`;
-            saveUsers();
+            saveLastLogins();
         }
     }
 
+    // ========== توابع نمایش ==========
+    function renderMovies() {
+        const grid = document.getElementById("moviesGrid");
+        if (!grid) return;
+        
+        grid.innerHTML = moviesData.map(movie => `
+            <div class="card">
+                <div class="card-img">
+                    <img src="${movie.image}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">${escapeHtml(movie.title)}</div>
+                    <div class="card-type">${movie.type}</div>
+                    <div class="card-links">
+                        ${movie.downloadLink ? `<a href="${escapeHtml(movie.downloadLink)}" class="btn btn-download" target="_blank">⬇️ ${escapeHtml(movie.downloadTitle)}</a>` : '<span style="color:#883333;">⏳ لینک به زودی</span>'}
+                        ${movie.watchLink ? `<a href="${escapeHtml(movie.watchLink)}" class="btn btn-watch" target="_blank">▶️ ${escapeHtml(movie.watchTitle)}</a>` : ''}
+                    </div>
+                </div>
+            </div>
+        `).join("");
+    }
+    
+    function renderUsersTable() {
+        const tbody = document.getElementById("usersTableBody");
+        if (!tbody) return;
+        
+        tbody.innerHTML = "";
+        users.forEach(user => {
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = user.username;
+            row.insertCell(1).innerText = user.role === "admin" ? "مدیر" : "کاربر";
+            row.insertCell(2).innerText = user.lastLogin || "هنوز وارد نشده";
+        });
+    }
+    
+    function downloadUpdatedCode() {
+        // ساخت کد جدید با لینک‌های به‌روز شده
+        const currentCode = document.documentElement.outerHTML;
+        
+        // دانلود فایل
+        const blob = new Blob([currentCode], { type: "text/html" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "index.html";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        alert("✅ فایل دانلود شد! حالا این فایل رو روی گیت‌هاب آپلود کن تا لینک‌های جدید برای همه نمایش داده بشه.");
+    }
+    
+    // ========== توابع اصلی ==========
     function attemptLogin() {
         const username = document.getElementById("loginUsername").value.trim();
         const password = document.getElementById("loginPassword").value;
@@ -511,7 +613,7 @@
             document.getElementById("loginError").innerText = "❌ نام کاربری یا رمز عبور اشتباه است";
         }
     }
-
+    
     function showMainPage() {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("appPage").style.display = "block";
@@ -526,14 +628,14 @@
         }
         renderMovies();
     }
-
+    
     function showAdminPage() {
         if (currentUser.role !== "admin") return;
         document.getElementById("appPage").style.display = "none";
         document.getElementById("adminPage").style.display = "block";
         renderUsersTable();
     }
-
+    
     function logout() {
         currentUser = null;
         localStorage.removeItem("cinema_currentUser");
@@ -543,74 +645,20 @@
         document.getElementById("loginUsername").value = "";
         document.getElementById("loginPassword").value = "";
     }
-
-    function renderUsersTable() {
-        const tbody = document.getElementById("usersTableBody");
-        tbody.innerHTML = "";
-        users.forEach(user => {
-            const row = tbody.insertRow();
-            row.insertCell(0).innerText = user.username;
-            row.insertCell(1).innerText = user.role === "admin" ? "مدیر" : "کاربر";
-            row.insertCell(2).innerText = user.lastLogin || "هنوز وارد نشده";
-            const actionCell = row.insertCell(3);
-            if (user.username !== "حمیدرضا") {
-                const delBtn = document.createElement("button");
-                delBtn.innerText = "🗑️ حذف";
-                delBtn.className = "delete-btn";
-                delBtn.onclick = () => deleteUser(user.username);
-                actionCell.appendChild(delBtn);
-            } else {
-                actionCell.innerText = "—";
-            }
+    
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
         });
     }
-
-    function addUser() {
-        const newUsername = document.getElementById("newUsername").value.trim();
-        const newPassword = document.getElementById("newPassword").value.trim();
-        if (!newUsername || !newPassword) {
-            alert("لطفاً نام کاربری و رمز عبور را وارد کنید");
-            return;
-        }
-        if (users.find(u => u.username === newUsername)) {
-            alert("این نام کاربری قبلاً وجود دارد");
-            return;
-        }
-        users.push({ username: newUsername, password: newPassword, role: "user", lastLogin: "" });
-        saveUsers();
-        renderUsersTable();
-        document.getElementById("newUsername").value = "";
-        document.getElementById("newPassword").value = "";
-    }
-
-    function deleteUser(username) {
-        if (confirm(`آیا از حذف کاربر "${username}" مطمئن هستید؟`)) {
-            users = users.filter(u => u.username !== username);
-            saveUsers();
-            renderUsersTable();
-        }
-    }
-
-    function renderMovies() {
-        const grid = document.getElementById("moviesGrid");
-        grid.innerHTML = moviesData.map(movie => `
-            <div class="card">
-                <div class="card-img">
-                    <img src="${movie.image}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
-                </div>
-                <div class="card-content">
-                    <div class="card-title">${movie.title}</div>
-                    <div class="card-type">${movie.type}</div>
-                    <div class="card-links">
-                        ${movie.downloadLink ? `<a href="${movie.downloadLink}" class="btn btn-download" target="_blank">⬇️ دانلود</a>` : '<span style="color:#883333;">⏳ لینک به زودی</span>'}
-                        ${movie.watchLink ? `<a href="${movie.watchLink}" class="btn btn-watch" target="_blank">▶️ پخش آنلاین</a>` : ''}
-                    </div>
-                </div>
-            </div>
-        `).join("");
-    }
-
+    
     function checkSession() {
+        loadUsers();
+        
         const saved = localStorage.getItem("cinema_currentUser");
         if (saved) {
             const userData = JSON.parse(saved);
@@ -625,8 +673,7 @@
         document.getElementById("appPage").style.display = "none";
         document.getElementById("adminPage").style.display = "none";
     }
-
-    loadUsers();
+    
     checkSession();
 </script>
 </body>
