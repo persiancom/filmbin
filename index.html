@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Void Cinema | پخش و دانلود</title>
+    <title>Void Cinema | سریال‌خانه</title>
     <style>
         * {
             margin: 0;
@@ -24,7 +24,6 @@
             margin: 0 auto;
         }
 
-        /* هدر خفن */
         .header {
             text-align: center;
             padding: 50px 20px;
@@ -54,7 +53,6 @@
             opacity: 0.8;
         }
 
-        /* فیلتر دکمه ها */
         .filters {
             display: flex;
             gap: 15px;
@@ -81,7 +79,6 @@
             color: white;
             border-color: #ff7777;
             box-shadow: 0 0 15px #ff0000;
-            text-shadow: 0 0 3px black;
         }
 
         .filter-btn:hover {
@@ -90,14 +87,12 @@
             transform: scale(1.02);
         }
 
-        /* گرید کارت ها */
         .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 28px;
         }
 
-        /* کارت با تم قرمز مشکی */
         .card {
             background: linear-gradient(145deg, #0f0505, #1a0808);
             border-radius: 28px;
@@ -114,13 +109,25 @@
         }
 
         .card-img {
+            width: 100%;
+            height: 420px;
             background: linear-gradient(115deg, #2a0505, #000000);
-            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4.5rem;
+            overflow: hidden;
             position: relative;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.05);
         }
 
         .card-img::after {
@@ -129,8 +136,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 50px;
+            height: 80px;
             background: linear-gradient(to top, #0f0505, transparent);
+            pointer-events: none;
         }
 
         .card-content {
@@ -142,7 +150,6 @@
             font-weight: bold;
             margin-bottom: 10px;
             color: #ffcccc;
-            letter-spacing: 0px;
         }
 
         .card-type {
@@ -174,7 +181,6 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            cursor: pointer;
         }
 
         .btn-download {
@@ -210,7 +216,6 @@
             border-top: 1px solid #330000;
         }
 
-        /* اسکرول بار */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -232,6 +237,9 @@
             body {
                 padding: 15px;
             }
+            .card-img {
+                height: 350px;
+            }
         }
     </style>
 </head>
@@ -245,8 +253,7 @@
 
     <div class="filters">
         <button class="filter-btn active" data-filter="all">🔥 همه</button>
-        <button class="filter-btn" data-filter="فیلم">🎬 فیلم</button>
-        <button class="filter-btn" data-filter="سریال">📺 سریال</button>
+        <button class="filter-btn" data-filter="سریال">📺 سریال‌ها</button>
     </div>
 
     <div id="moviesGrid" class="movies-grid"></div>
@@ -258,47 +265,68 @@
 
 <script>
     // =========================================
-    // ✅ لیست فیلم و سریال ها (لینک هارو اینجا عوض کن / اضافه کن)
+    // ✅ لیست سریال‌ها با عکس (لینک‌ها خالی - خودت پر کن)
     // =========================================
     const moviesData = [
         {
             id: 1,
-            title: "بازی تاج و تخت - فصل 1 کامل",
+            title: "سریال گل سنگ",
             type: "سریال",
-            downloadLink: "https://example.com/got-s01.mp4",
-            watchLink: "https://ok.ru/video/217832349"
+            image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp",
+            downloadLink: "",
+            watchLink: ""
         },
         {
             id: 2,
-            title: "جان ویک 4",
-            type: "فیلم",
-            downloadLink: "https://example.com/johnwick4.mp4",
+            title: "سریال بی عاطفه",
+            type: "سریال",
+            image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg",
+            downloadLink: "",
             watchLink: ""
         },
         {
             id: 3,
-            title: "جوکر (Joker)",
-            type: "فیلم",
-            downloadLink: "https://example.com/joker2019.mp4",
-            watchLink: "https://www.aparat.com/v/abc123xyz"
+            title: "سریال بیست و یک",
+            type: "سریال",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnQWgP4VBNgnXCM_RbsWnGW0NohgRNdxbZxG4zPZWc53wv9tD8s2h4pk&s=10",
+            downloadLink: "",
+            watchLink: ""
         },
         {
             id: 4,
-            title: "بریکینگ بد - فصل 1 تا 3",
+            title: "سریال هزار و یک شب",
             type: "سریال",
-            downloadLink: "https://example.com/breakingbad-s1-s3.mp4",
-            watchLink: "https://t.me/breakingbad_channel/5"
+            image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80",
+            downloadLink: "",
+            watchLink: ""
         },
         {
             id: 5,
-            title: "تنسنت",
-            type: "فیلم",
-            downloadLink: "https://example.com/tenet.mp4",
-            watchLink: "https://example.com/stream/tenet"
+            title: "سریال بدنام",
+            type: "سریال",
+            image: "https://static.cdn.asset.filimo.com/flmt/mov_174988_343591.jpg?width=300&quality=85&sharpen=80&secret=ZaRTIhChiq5rD660aRzxNw",
+            downloadLink: "",
+            watchLink: ""
+        },
+        {
+            id: 6,
+            title: "سریال مو به مو",
+            type: "سریال",
+            image: "",
+            downloadLink: "",
+            watchLink: ""
+        },
+        {
+            id: 7,
+            title: "سریال From",
+            type: "سریال",
+            image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100",
+            downloadLink: "",
+            watchLink: ""
         }
     ];
 
-    // ---------- کد نمایش و فیلتر - نیازی به تغییر نیست ----------
+    // ---------- کد نمایش - نیازی به تغییر نیست ----------
     let currentFilter = "all";
 
     function renderMovies() {
@@ -315,20 +343,19 @@
         grid.innerHTML = filtered.map(movie => {
             const hasWatch = movie.watchLink && movie.watchLink.trim() !== "";
             const hasDownload = movie.downloadLink && movie.downloadLink.trim() !== "";
-            const typeIcon = movie.type === "فیلم" ? "🎬" : "📀";
+            const posterUrl = movie.image && movie.image.trim() !== "" ? movie.image : "https://placehold.co/500x700/1a0808/cc0000?text=No+Poster";
             
             return `
                 <div class="card">
                     <div class="card-img">
-                        ${typeIcon} ${typeIcon === "🎬" ? "🎞️" : "🎥"}
+                        <img src="${escapeHtml(posterUrl)}" alt="${escapeHtml(movie.title)}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=Poster+Not+Found'">
                     </div>
                     <div class="card-content">
                         <div class="card-title">${escapeHtml(movie.title)}</div>
-                        <div class="card-type">${movie.type}</div>
+                        <div class="card-type">سریال</div>
                         <div class="card-links">
-                            ${hasDownload ? `<a href="${escapeHtml(movie.downloadLink)}" class="btn btn-download" target="_blank">⬇️ دانلود مستقیم</a>` : ''}
+                            ${hasDownload ? `<a href="${escapeHtml(movie.downloadLink)}" class="btn btn-download" target="_blank">⬇️ دانلود مستقیم</a>` : '<span style="color:#883333; padding:8px 0; display:inline-block;">⏳ لینک دانلود به زودی</span>'}
                             ${hasWatch ? `<a href="${escapeHtml(movie.watchLink)}" class="btn btn-watch" target="_blank">▶️ پخش آنلاین</a>` : ''}
-                            ${!hasDownload && !hasWatch ? '<span style="color:#883333;">⛔ لینک غیرفعال</span>' : ''}
                         </div>
                     </div>
                 </div>
