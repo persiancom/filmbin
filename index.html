@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Void Cinema | سریال‌خانه</title>
+    <title>سینما خانگی | پنل مدیریت</title>
     <style>
         * {
             margin: 0;
@@ -14,185 +14,315 @@
         body {
             background: radial-gradient(circle at 20% 10%, #0a0000 0%, #1a0101 50%, #000000 100%);
             font-family: 'Segoe UI', 'Poppins', Tahoma, sans-serif;
-            padding: 30px 20px;
-            color: #fff;
             min-height: 100vh;
+            color: #fff;
         }
 
+        /* صفحه ورود */
+        .login-page, .app-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: radial-gradient(circle at 20% 10%, #0a0000 0%, #1a0101 50%, #000000 100%);
+        }
+
+        .login-box {
+            background: linear-gradient(145deg, #0f0505, #1a0808);
+            border-radius: 40px;
+            padding: 45px 35px;
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid #ff2a2a40;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 3px solid #cc0000;
+        }
+
+        .login-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .login-box h2 {
+            color: #ff8888;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffaaaa;
+            font-size: 0.9rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 18px;
+            background: #2a0a0a;
+            border: 1px solid #cc3333;
+            border-radius: 30px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #cc0000;
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: #ff1a1a;
+            transform: scale(1.02);
+            box-shadow: 0 0 15px red;
+        }
+
+        .error-msg {
+            color: #ff6666;
+            margin-top: 15px;
+            font-size: 0.85rem;
+        }
+
+        /* پنل ادمین */
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 20px;
         }
 
-        .header {
-            text-align: center;
-            padding: 50px 20px;
-            margin-bottom: 50px;
-            background: linear-gradient(135deg, rgba(180, 20, 30, 0.2), rgba(0, 0, 0, 0.6));
-            border-radius: 60px;
-            border: 1px solid rgba(220, 40, 50, 0.5);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.2);
+        .admin-header {
+            background: linear-gradient(135deg, rgba(180, 20, 30, 0.3), rgba(0, 0, 0, 0.7));
+            border-radius: 30px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border: 1px solid #ff3333;
         }
 
-        h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ff2d2d, #8b0000);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            letter-spacing: 2px;
+        .admin-badge {
+            background: #cc0000;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: bold;
         }
 
-        .sub {
-            color: #ff7777;
-            margin-top: 10px;
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .logout-btn {
+            background: #2a0a0a;
+            border: 1px solid #cc3333;
+            padding: 8px 20px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
         }
 
-        .filters {
+        .admin-panel {
+            background: #0f0505;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #ff3333;
+        }
+
+        .admin-panel h3 {
+            color: #ff8888;
+            margin-bottom: 20px;
+        }
+
+        .add-user-form {
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
-            margin-bottom: 40px;
-            justify-content: center;
+            margin-bottom: 30px;
         }
 
-        .filter-btn {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid #ff3333;
-            padding: 10px 28px;
-            border-radius: 50px;
-            color: #ffaaaa;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-            backdrop-filter: blur(5px);
-            font-size: 1rem;
+        .add-user-form input {
+            flex: 1;
+            padding: 12px 18px;
+            background: #2a0a0a;
+            border: 1px solid #cc3333;
+            border-radius: 30px;
+            color: white;
         }
 
-        .filter-btn.active {
+        .add-user-form button {
             background: #cc0000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
             color: white;
-            border-color: #ff7777;
-            box-shadow: 0 0 15px #ff0000;
+            cursor: pointer;
         }
 
-        .filter-btn:hover {
-            background: #aa0000;
+        .users-table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #332222;
+        }
+
+        th {
+            color: #ffaaaa;
+        }
+
+        .delete-btn {
+            background: #8b0000;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 20px;
             color: white;
-            transform: scale(1.02);
+            cursor: pointer;
+        }
+
+        /* گرید فیلم‌ها */
+        .hero-banner {
+            margin-bottom: 40px;
+            border-radius: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-text {
+            text-align: center;
+            margin-top: -60px;
+            position: relative;
+            z-index: 2;
+            padding-bottom: 20px;
+        }
+
+        .hero-text h2 {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 2rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
 
         .card {
             background: linear-gradient(145deg, #0f0505, #1a0808);
-            border-radius: 28px;
+            border-radius: 20px;
             overflow: hidden;
             border: 1px solid #ff2a2a40;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             border-color: #ff3333;
-            box-shadow: 0 20px 35px rgba(255, 0, 0, 0.3);
         }
 
         .card-img {
             width: 100%;
-            height: 420px;
-            background: linear-gradient(115deg, #2a0505, #000000);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 380px;
             overflow: hidden;
-            position: relative;
         }
 
         .card-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .card:hover .card-img img {
-            transform: scale(1.05);
-        }
-
-        .card-img::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: linear-gradient(to top, #0f0505, transparent);
-            pointer-events: none;
         }
 
         .card-content {
-            padding: 22px;
+            padding: 18px;
         }
 
         .card-title {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 10px;
-            color: #ffcccc;
+            margin-bottom: 8px;
         }
 
         .card-type {
             display: inline-block;
             background: #cc0000;
-            color: white;
-            padding: 4px 14px;
-            border-radius: 30px;
+            padding: 4px 12px;
+            border-radius: 20px;
             font-size: 0.7rem;
-            font-weight: bold;
-            margin-bottom: 18px;
-            box-shadow: 0 0 8px #ff0000;
+            margin-bottom: 15px;
         }
 
         .card-links {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
-            margin-top: 10px;
         }
 
         .btn {
-            padding: 10px 20px;
-            border-radius: 40px;
+            padding: 8px 16px;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.85rem;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.8rem;
+            display: inline-block;
         }
 
         .btn-download {
             background: #b91c1c;
             color: white;
-            border: 1px solid #ff6666;
-        }
-
-        .btn-download:hover {
-            background: #ff2a2a;
-            transform: scale(1.02);
-            box-shadow: 0 0 12px red;
         }
 
         .btn-watch {
@@ -201,192 +331,263 @@
             border: 1px solid #aa3333;
         }
 
-        .btn-watch:hover {
-            background: #4a1515;
-            color: white;
-            border-color: #ff5555;
-        }
-
         .footer {
             text-align: center;
-            margin-top: 70px;
+            margin-top: 60px;
             padding: 25px;
-            color: #992222;
-            font-size: 0.75rem;
-            border-top: 1px solid #330000;
+            color: #ffaa33;
+            border-top: 1px solid #332222;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a0101;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cc0000;
-            border-radius: 10px;
-        }
-
-        @media (max-width: 750px) {
+        @media (max-width: 768px) {
             .movies-grid {
                 grid-template-columns: 1fr;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            body {
-                padding: 15px;
-            }
-            .card-img {
-                height: 350px;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>✦ VOID CINEMA ✦</h1>
-        <div class="sub">دانلود با سرعت | تماشای آنلاین</div>
+<!-- صفحه ورود -->
+<div id="loginPage" class="login-page">
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="https://github.com/persiancom/filmbin/blob/main/file_000000009994720aa38ea02c903cd1f7.png?raw=true" alt="Logo">
+            </div>
+            <h2>ورود به سینما</h2>
+            <div class="input-group">
+                <label>نام کاربری</label>
+                <input type="text" id="loginUsername" placeholder="نام کاربری خود را وارد کنید">
+            </div>
+            <div class="input-group">
+                <label>رمز عبور</label>
+                <input type="password" id="loginPassword" placeholder="رمز عبور">
+            </div>
+            <button class="login-btn" onclick="attemptLogin()">ورود</button>
+            <div id="loginError" class="error-msg"></div>
+        </div>
     </div>
+</div>
 
-    <div class="filters">
-        <button class="filter-btn active" data-filter="all">🔥 همه</button>
-        <button class="filter-btn" data-filter="سریال">📺 سریال‌ها</button>
-    </div>
+<!-- صفحه اصلی سایت (بعد از ورود) -->
+<div id="appPage" class="app-page" style="display: none;">
+    <div class="container">
+        <!-- هدر ادمین/کاربر -->
+        <div class="admin-header">
+            <div>
+                <span style="color:#ffaaaa;">خوش آمدی، </span>
+                <strong id="currentUserDisplay"></strong>
+                <span id="adminBadge" class="admin-badge" style="display: none; margin-right: 15px;">مدیر</span>
+            </div>
+            <button class="logout-btn" onclick="logout()">خروج</button>
+        </div>
 
-    <div id="moviesGrid" class="movies-grid"></div>
+        <!-- بنر تبلیغاتی بزرگ -->
+        <div class="hero-banner">
+            <img src="https://github.com/persiancom/filmbin/blob/main/file_00000000d35471fb9298f545464b46f0.png?raw=true" alt="Hero Banner">
+        </div>
+        <div class="hero-text">
+            <h2>✨ دانلود و تماشای فیلم و سریال ایرانی و خارجی ✨</h2>
+        </div>
 
-    <div class="footer">
-        © برای استفاده شخصی روی تلویزیون و اشتراک با دوستان
+        <!-- پنل مدیریت (فقط برای ادمین) -->
+        <div id="adminPanel" class="admin-panel" style="display: none;">
+            <h3>👑 پنل مدیریت کاربران</h3>
+            <div class="add-user-form">
+                <input type="text" id="newUsername" placeholder="نام کاربری جدید">
+                <input type="text" id="newPassword" placeholder="رمز عبور">
+                <button onclick="addUser()">➕ افزودن کاربر</button>
+            </div>
+            <div class="users-table">
+                <table>
+                    <thead>
+                        <tr><th>نام کاربری</th><th>نوع</th><th>آخرین ورود</th><th>عملیات</th></tr>
+                    </thead>
+                    <tbody id="usersTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- گرید فیلم‌ها و سریال‌ها -->
+        <div id="moviesGrid" class="movies-grid"></div>
+
+        <div class="footer">
+            تهیه شده توسط Hamidreza
+        </div>
     </div>
 </div>
 
 <script>
-    // =========================================
-    // ✅ لیست سریال‌ها با عکس (لینک‌ها خالی - خودت پر کن)
-    // =========================================
-    const moviesData = [
-        {
-            id: 1,
-            title: "سریال گل سنگ",
-            type: "سریال",
-            image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp",
-            downloadLink: "",
-            watchLink: ""
-        },
-        {
-            id: 2,
-            title: "سریال بی عاطفه",
-            type: "سریال",
-            image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg",
-            downloadLink: "",
-            watchLink: ""
-        },
-        {
-            id: 3,
-            title: "سریال بیست و یک",
-            type: "سریال",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnQWgP4VBNgnXCM_RbsWnGW0NohgRNdxbZxG4zPZWc53wv9tD8s2h4pk&s=10",
-            downloadLink: "",
-            watchLink: ""
-        },
-        {
-            id: 4,
-            title: "سریال هزار و یک شب",
-            type: "سریال",
-            image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80",
-            downloadLink: "",
-            watchLink: ""
-        },
-        {
-            id: 5,
-            title: "سریال بدنام",
-            type: "سریال",
-            image: "https://static.cdn.asset.filimo.com/flmt/mov_174988_343591.jpg?width=300&quality=85&sharpen=80&secret=ZaRTIhChiq5rD660aRzxNw",
-            downloadLink: "",
-            watchLink: ""
-        },
-        {
-            id: 6,
-            title: "سریال مو به مو",
-            type: "سریال",
-            image: "",
-            downloadLink: "",
-            watchLink: ""
-        },
-        {
-            id: 7,
-            title: "سریال From",
-            type: "سریال",
-            image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100",
-            downloadLink: "",
-            watchLink: ""
-        }
+    // ========== دیتابیس کاربران ==========
+    let users = [
+        { username: "حمیدرضا", password: "CTF_22", role: "admin", lastLogin: "" }
     ];
 
-    // ---------- کد نمایش - نیازی به تغییر نیست ----------
-    let currentFilter = "all";
+    let currentUser = null;
 
-    function renderMovies() {
-        const grid = document.getElementById("moviesGrid");
-        if (!grid) return;
+    // ========== سریال‌ها با پوستر کامل ==========
+    const moviesData = [
+        { id: 1, title: "سریال گل سنگ", type: "سریال", image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp", downloadLink: "", watchLink: "" },
+        { id: 2, title: "سریال بی عاطفه", type: "سریال", image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg", downloadLink: "", watchLink: "" },
+        { id: 3, title: "سریال بیست و یک", type: "سریال", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnQWgP4VBNgnXCM_RbsWnGW0NohgRNdxbZxG4zPZWc53wv9tD8s2h4pk&s=10", downloadLink: "", watchLink: "" },
+        { id: 4, title: "سریال هزار و یک شب", type: "سریال", image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80", downloadLink: "", watchLink: "" },
+        { id: 5, title: "سریال بدنام", type: "سریال", image: "https://static.cdn.asset.filimo.com/flmt/mov_174988_343591.jpg?width=300&quality=85&sharpen=80&secret=ZaRTIhChiq5rD660aRzxNw", downloadLink: "", watchLink: "" },
+        { id: 6, title: "سریال مو به مو", type: "سریال", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkX72DwIPWEuz_0ETODdFnEM_HBYcq4VN9MjpdH1pZ8ipW5-sItCTQTUlI&s=10", downloadLink: "", watchLink: "" },
+        { id: 7, title: "سریال From", type: "سریال", image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100", downloadLink: "", watchLink: "" }
+    ];
+
+    // بارگذاری کاربران از localStorage
+    function loadUsers() {
+        const saved = localStorage.getItem("cinema_users");
+        if (saved) {
+            users = JSON.parse(saved);
+        } else {
+            saveUsers();
+        }
+    }
+
+    function saveUsers() {
+        localStorage.setItem("cinema_users", JSON.stringify(users));
+    }
+
+    // به‌روزرسانی آخرین ورود
+    function updateLastLogin(username) {
+        const user = users.find(u => u.username === username);
+        if (user) {
+            const now = new Date();
+            user.lastLogin = `${now.toLocaleDateString('fa-IR')} - ${now.toLocaleTimeString('fa-IR')}`;
+            saveUsers();
+        }
+    }
+
+    // تلاش برای ورود
+    function attemptLogin() {
+        const username = document.getElementById("loginUsername").value.trim();
+        const password = document.getElementById("loginPassword").value;
+        const user = users.find(u => u.username === username && u.password === password);
         
-        let filtered = currentFilter === "all" ? moviesData : moviesData.filter(m => m.type === currentFilter);
+        if (user) {
+            currentUser = user;
+            updateLastLogin(username);
+            localStorage.setItem("cinema_currentUser", JSON.stringify({ username: user.username, role: user.role }));
+            showApp();
+        } else {
+            document.getElementById("loginError").innerText = "❌ نام کاربری یا رمز عبور اشتباه است";
+        }
+    }
+
+    function showApp() {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("appPage").style.display = "block";
+        document.getElementById("currentUserDisplay").innerText = currentUser.username;
         
-        if (filtered.length === 0) {
-            grid.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:60px; background:#0f0505; border-radius:40px; border:1px solid red;">⚠️ محتوایی یافت نشد</div>`;
+        if (currentUser.role === "admin") {
+            document.getElementById("adminBadge").style.display = "inline-block";
+            document.getElementById("adminPanel").style.display = "block";
+            renderUsersTable();
+        } else {
+            document.getElementById("adminBadge").style.display = "none";
+            document.getElementById("adminPanel").style.display = "none";
+        }
+        renderMovies();
+    }
+
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem("cinema_currentUser");
+        document.getElementById("loginPage").style.display = "flex";
+        document.getElementById("appPage").style.display = "none";
+        document.getElementById("loginUsername").value = "";
+        document.getElementById("loginPassword").value = "";
+    }
+
+    // مدیریت کاربران (فقط ادمین)
+    function renderUsersTable() {
+        const tbody = document.getElementById("usersTableBody");
+        tbody.innerHTML = "";
+        users.forEach(user => {
+            const row = tbody.insertRow();
+            row.insertCell(0).innerText = user.username;
+            row.insertCell(1).innerText = user.role === "admin" ? "مدیر" : "کاربر";
+            row.insertCell(2).innerText = user.lastLogin || "هنوز وارد نشده";
+            const actionCell = row.insertCell(3);
+            if (user.username !== "حمیدرضا") {
+                const delBtn = document.createElement("button");
+                delBtn.innerText = "🗑️ حذف";
+                delBtn.className = "delete-btn";
+                delBtn.onclick = () => deleteUser(user.username);
+                actionCell.appendChild(delBtn);
+            } else {
+                actionCell.innerText = "—";
+            }
+        });
+    }
+
+    function addUser() {
+        const newUsername = document.getElementById("newUsername").value.trim();
+        const newPassword = document.getElementById("newPassword").value.trim();
+        if (!newUsername || !newPassword) {
+            alert("لطفاً نام کاربری و رمز عبور را وارد کنید");
             return;
         }
-        
-        grid.innerHTML = filtered.map(movie => {
-            const hasWatch = movie.watchLink && movie.watchLink.trim() !== "";
-            const hasDownload = movie.downloadLink && movie.downloadLink.trim() !== "";
-            const posterUrl = movie.image && movie.image.trim() !== "" ? movie.image : "https://placehold.co/500x700/1a0808/cc0000?text=No+Poster";
-            
-            return `
-                <div class="card">
-                    <div class="card-img">
-                        <img src="${escapeHtml(posterUrl)}" alt="${escapeHtml(movie.title)}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=Poster+Not+Found'">
-                    </div>
-                    <div class="card-content">
-                        <div class="card-title">${escapeHtml(movie.title)}</div>
-                        <div class="card-type">سریال</div>
-                        <div class="card-links">
-                            ${hasDownload ? `<a href="${escapeHtml(movie.downloadLink)}" class="btn btn-download" target="_blank">⬇️ دانلود مستقیم</a>` : '<span style="color:#883333; padding:8px 0; display:inline-block;">⏳ لینک دانلود به زودی</span>'}
-                            ${hasWatch ? `<a href="${escapeHtml(movie.watchLink)}" class="btn btn-watch" target="_blank">▶️ پخش آنلاین</a>` : ''}
-                        </div>
+        if (users.find(u => u.username === newUsername)) {
+            alert("این نام کاربری قبلاً وجود دارد");
+            return;
+        }
+        users.push({ username: newUsername, password: newPassword, role: "user", lastLogin: "" });
+        saveUsers();
+        renderUsersTable();
+        document.getElementById("newUsername").value = "";
+        document.getElementById("newPassword").value = "";
+    }
+
+    function deleteUser(username) {
+        if (confirm(`آیا از حذف کاربر "${username}" مطمئن هستید؟`)) {
+            users = users.filter(u => u.username !== username);
+            saveUsers();
+            renderUsersTable();
+        }
+    }
+
+    // نمایش فیلم‌ها و سریال‌ها
+    function renderMovies() {
+        const grid = document.getElementById("moviesGrid");
+        grid.innerHTML = moviesData.map(movie => `
+            <div class="card">
+                <div class="card-img">
+                    <img src="${movie.image}" alt="${movie.title}" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
+                </div>
+                <div class="card-content">
+                    <div class="card-title">${movie.title}</div>
+                    <div class="card-type">${movie.type}</div>
+                    <div class="card-links">
+                        ${movie.downloadLink ? `<a href="${movie.downloadLink}" class="btn btn-download" target="_blank">⬇️ دانلود</a>` : '<span style="color:#883333;">⏳ لینک به زودی</span>'}
+                        ${movie.watchLink ? `<a href="${movie.watchLink}" class="btn btn-watch" target="_blank">▶️ پخش آنلاین</a>` : ''}
                     </div>
                 </div>
-            `;
-        }).join("");
+            </div>
+        `).join("");
     }
-    
-    function escapeHtml(str) {
-        if (!str) return "";
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
+
+    // چک کردن session در ابتدا
+    function checkSession() {
+        const saved = localStorage.getItem("cinema_currentUser");
+        if (saved) {
+            const userData = JSON.parse(saved);
+            const user = users.find(u => u.username === userData.username && u.role === userData.role);
+            if (user) {
+                currentUser = user;
+                showApp();
+                return;
+            }
+        }
+        document.getElementById("loginPage").style.display = "flex";
+        document.getElementById("appPage").style.display = "none";
     }
-    
-    function setupFilters() {
-        const btns = document.querySelectorAll(".filter-btn");
-        btns.forEach(btn => {
-            btn.addEventListener("click", function() {
-                btns.forEach(b => b.classList.remove("active"));
-                this.classList.add("active");
-                currentFilter = this.getAttribute("data-filter");
-                renderMovies();
-            });
-        });
-    }
-    
-    renderMovies();
-    setupFilters();
+
+    loadUsers();
+    checkSession();
 </script>
 </body>
 </html>
