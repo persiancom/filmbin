@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کتابخانه فیلم و سریال من</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0f1e 0%, #0d1117 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+            color: #e4e4e7;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* هدر */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .sub {
+            color: #8b8ba5;
+            font-size: 0.9rem;
+        }
+
+        /* بخش راهنما - جایی که باید لینک جدید بزاری */
+        .guide {
+            background: #161b22;
+            border-left: 4px solid #f97316;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            font-family: monospace;
+        }
+
+        .guide h3 {
+            color: #f97316;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .guide code {
+            display: block;
+            background: #0d1117;
+            padding: 15px;
+            border-radius: 12px;
+            direction: ltr;
+            text-align: left;
+            color: #7ee787;
+            overflow-x: auto;
+            font-size: 13px;
+            margin: 12px 0;
+            border: 1px solid #30363d;
+        }
+
+        .highlight {
+            background: #2d1f00;
+            padding: 10px;
+            border-radius: 12px;
+            color: #ffb347;
+        }
+
+        /* فیلترها */
+        .filters {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            background: #21262d;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: #c9d1d9;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .filter-btn.active {
+            background: #f97316;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: #f97316cc;
+        }
+
+        /* کارت‌ها */
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: #161b22;
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #30363d;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.5);
+            border-color: #f9731680;
+        }
+
+        .card-img {
+            background: linear-gradient(135deg, #1e2a3a, #0f1722);
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .card-type {
+            display: inline-block;
+            background: #f9731622;
+            color: #f97316;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-bottom: 12px;
+        }
+
+        .card-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn {
+            background: #21262d;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.8rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-download {
+            background: #2ea043;
+        }
+
+        .btn-download:hover {
+            background: #3fb950;
+        }
+
+        .btn-watch {
+            background: #1f6feb;
+        }
+
+        .btn-watch:hover {
+            background: #388bfd;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 25px;
+            color: #6e7681;
+            font-size: 0.8rem;
+            border-top: 1px solid #21262d;
+        }
+
+        @media (max-width: 700px) {
+            .movies-grid {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🎬 خونه سینما</h1>
+        <div class="sub">دانلود و تماشای آنلاین فیلم و سریال | به روز رسانی جدید</div>
+    </div>
+
+    <!-- =============================================== -->
+    <!-- راهنما: چطور لینک جدید اضافه کنم؟               -->
+    <!-- =============================================== -->
+    <div class="guide">
+        <h3>📌 چطور لینک فیلم یا سریال جدید اضافه کنم؟</h3>
+        <p>فایل <strong>index.html</strong> رو باز کن. برو به پایین صفحه، قسمتی که نوشته <span style="color:#f97316">// === دیتابیس فیلم‌ها (اینجا لینک جدید اضافه کن) ===</span></p>
+        <p>بعد از <code>const moviesData = [</code> یک کپی از این قالب بردار و اطلاعات جدید رو جایگزین کن:</p>
+        <code>
+            { <br>
+            &nbsp;&nbsp;id: 4,<br>
+            &nbsp;&nbsp;title: "اسم فیلم/سریال",<br>
+            &nbsp;&nbsp;type: "فیلم",   // یا "سریال"<br>
+            &nbsp;&nbsp;downloadLink: "https://لینک-دانلود-فیلم.mp4",<br>
+            &nbsp;&nbsp;watchLink: "https://لینک-تماشای-آنلاین"<br>
+            },
+        </code>
+        <p class="highlight">💡 نکته: id رو به ترتیب بذار (بعد از آخرین عدد یکی زیاد کن). اگر لینک تماشای آنلاین نداری، بذار <code>watchLink: ""</code> بماند. دکمه‌ها خودکار مخفی می‌شن.</p>
+        <p>✅ بعد از ذخیره فایل، دوباره آپلودش کن روی GitHub. سایت به‌طور خودکار آپدیت میشه.</p>
+    </div>
+
+    <!-- دکمه‌های فیلتر -->
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">همه</button>
+        <button class="filter-btn" data-filter="فیلم">🎬 فیلم‌ها</button>
+        <button class="filter-btn" data-filter="سریال">📺 سریال‌ها</button>
+    </div>
+
+    <!-- گرید نمایش کارت‌ها -->
+    <div id="moviesGrid" class="movies-grid">
+        <!-- کارت‌ها توسط جاوااسکریپت ساخته میشن -->
+    </div>
+
+    <div class="footer">
+        🔗 هر لینک دانلود یا تماشا رو می‌تونی به بقیه بدی - استفاده شخصی و دوستانه
+    </div>
+</div>
+
+<script>
+    // =============================================
+    // === دیتابیس فیلم‌ها (اینجا لینک جدید اضافه کن) ===
+    // =============================================
+    const moviesData = [
+        {
+            id: 1,
+            title: "بازی تاج و تخت - فصل 1",
+            type: "سریال",
+            downloadLink: "https://example.com/got-s01-complete.mp4",   // لینک دانلودت رو بذار
+            watchLink: "https://ok.ru/video/123456789"                  // لینک تماشای آنلاین (اختیاری)
+        },
+        {
+            id: 2,
+            title: "بیگانه (Alien)",
+            type: "فیلم",
+            downloadLink: "https://example.com/alien-1979.mp4",
+            watchLink: "https://www.aparat.com/v/abcdef"
+        },
+        {
+            id: 3,
+            title: "پیشتازان فضا",
+            type: "فیلم",
+            downloadLink: "https://example.com/star-trek.mp4",
+            watchLink: ""
+        },
+        {
+            id: 4,
+            title: "شرلوک - فصل اول",
+            type: "سریال",
+            downloadLink: "https://example.com/sherlock-s01.mp4",
+            watchLink: "https://t.me/yourmoviechannel/123"
+        }
+    ];
+
+    // ========== کد نمایش و فیلتر (نیازی به تغییر نداره) ==========
+    let currentFilter = "all";
+
+    function renderMovies() {
+        const grid = document.getElementById("moviesGrid");
+        if (!grid) return;
+        
+        let filtered = moviesData;
+        if (currentFilter !== "all") {
+            filtered = moviesData.filter(m => m.type === currentFilter);
+        }
+        
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:50px;">⛔ هیچ محتوایی یافت نشد. لینک جدید اضافه کن!</div>`;
+            return;
+        }
+        
+        grid.innerHTML = filtered.map(movie => {
+            const hasWatch = movie.watchLink && movie.watchLink.trim() !== "";
+            const hasDownload = movie.downloadLink && movie.downloadLink.trim() !== "";
+            
+            let typeEmoji = movie.type === "فیلم" ? "🎬" : "📺";
+            let typeClass = movie.type === "فیلم" ? "فیلم" : "سریال";
+            
+            return `
+                <div class="card">
+                    <div class="card-img">
+                        ${typeEmoji === "🎬" ? "🍿 🎥" : "📡 🎞️"}
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">${escapeHtml(movie.title)}</div>
+                        <div class="card-type">${typeClass}</div>
+                        <div class="card-links">
+                            ${hasDownload ? `<a href="${escapeHtml(movie.downloadLink)}" class="btn btn-download" target="_blank">⬇️ دانلود</a>` : ''}
+                            ${hasWatch ? `<a href="${escapeHtml(movie.watchLink)}" class="btn btn-watch" target="_blank">▶️ تماشای آنلاین</a>` : ''}
+                            ${!hasDownload && !hasWatch ? '<span style="color:#666;">❌ لینکی ثبت نشده</span>' : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join("");
+    }
+    
+    // کمکی برای جلوگیری از خطا در کاراکترهای خاص
+    function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // فیلترها
+    function setupFilters() {
+        const btns = document.querySelectorAll(".filter-btn");
+        btns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                btns.forEach(b => b.classList.remove("active"));
+                this.classList.add("active");
+                currentFilter = this.getAttribute("data-filter");
+                renderMovies();
+            });
+        });
+    }
+    
+    // اجرای اولیه
+    renderMovies();
+    setupFilters();
+</script>
+</body>
+</html>
