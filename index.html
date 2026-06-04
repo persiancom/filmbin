@@ -19,10 +19,8 @@
         }
 
         /* صفحه ورود */
-        .login-page, .app-page {
+        .login-page, .app-page, .admin-page {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         .login-container {
@@ -31,7 +29,6 @@
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            background: radial-gradient(circle at 20% 10%, #0a0000 0%, #1a0101 50%, #000000 100%);
         }
 
         .login-box {
@@ -46,12 +43,13 @@
         }
 
         .login-logo {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            margin: 0 auto 20px;
+            margin: 0 auto 25px;
             overflow: hidden;
             border: 3px solid #cc0000;
+            background: #1a0808;
         }
 
         .login-logo img {
@@ -87,7 +85,6 @@
             color: white;
             font-size: 1rem;
             outline: none;
-            transition: 0.2s;
         }
 
         .input-group input:focus {
@@ -106,13 +103,11 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
-            margin-top: 10px;
         }
 
         .login-btn:hover {
             background: #ff1a1a;
             transform: scale(1.02);
-            box-shadow: 0 0 15px red;
         }
 
         .error-msg {
@@ -121,17 +116,11 @@
             font-size: 0.85rem;
         }
 
-        /* پنل ادمین */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .admin-header {
+        /* هدر اصلی */
+        .main-header {
             background: linear-gradient(135deg, rgba(180, 20, 30, 0.3), rgba(0, 0, 0, 0.7));
             border-radius: 30px;
-            padding: 20px 30px;
+            padding: 18px 30px;
             margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
@@ -141,10 +130,20 @@
             border: 1px solid #ff3333;
         }
 
-        .admin-badge {
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .admin-link-btn {
             background: #cc0000;
+            border: none;
             padding: 8px 20px;
             border-radius: 30px;
+            color: white;
+            cursor: pointer;
             font-weight: bold;
         }
 
@@ -157,93 +156,32 @@
             cursor: pointer;
         }
 
-        .admin-panel {
-            background: #0f0505;
-            border-radius: 30px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border: 1px solid #ff3333;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
         }
 
-        .admin-panel h3 {
-            color: #ff8888;
-            margin-bottom: 20px;
-        }
-
-        .add-user-form {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .add-user-form input {
-            flex: 1;
-            padding: 12px 18px;
-            background: #2a0a0a;
-            border: 1px solid #cc3333;
-            border-radius: 30px;
-            color: white;
-        }
-
-        .add-user-form button {
-            background: #cc0000;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .users-table {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: right;
-            border-bottom: 1px solid #332222;
-        }
-
-        th {
-            color: #ffaaaa;
-        }
-
-        .delete-btn {
-            background: #8b0000;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 20px;
-            color: white;
-            cursor: pointer;
-        }
-
-        /* گرید فیلم‌ها */
+        /* بنر */
         .hero-banner {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             border-radius: 30px;
             overflow: hidden;
-            position: relative;
         }
 
         .hero-banner img {
             width: 100%;
-            max-height: 400px;
+            max-height: 380px;
             object-fit: cover;
             display: block;
         }
 
         .hero-text {
             text-align: center;
-            margin-top: -60px;
+            margin-top: -50px;
             position: relative;
             z-index: 2;
-            padding-bottom: 20px;
+            padding-bottom: 25px;
         }
 
         .hero-text h2 {
@@ -251,10 +189,12 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 2rem;
+            font-size: 1.4rem;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            letter-spacing: 1px;
         }
 
+        /* گرید فیلم‌ها */
         .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -339,9 +279,103 @@
             border-top: 1px solid #332222;
         }
 
+        /* صفحه ادمین جداگانه */
+        .admin-page {
+            display: none;
+            padding: 20px;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, rgba(180, 20, 30, 0.3), rgba(0, 0, 0, 0.7));
+            border-radius: 30px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .admin-panel-box {
+            background: #0f0505;
+            border-radius: 30px;
+            padding: 25px;
+            border: 1px solid #ff3333;
+        }
+
+        .add-user-form {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .add-user-form input {
+            flex: 1;
+            padding: 12px 18px;
+            background: #2a0a0a;
+            border: 1px solid #cc3333;
+            border-radius: 30px;
+            color: white;
+        }
+
+        .add-user-form button {
+            background: #cc0000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .users-table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #332222;
+        }
+
+        th {
+            color: #ffaaaa;
+        }
+
+        .delete-btn {
+            background: #8b0000;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .back-to-site {
+            background: #2a0a0a;
+            border: 1px solid #cc3333;
+            padding: 10px 25px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+        }
+
         @media (max-width: 768px) {
             .movies-grid {
                 grid-template-columns: 1fr;
+            }
+            .hero-text h2 {
+                font-size: 1rem;
             }
         }
     </style>
@@ -353,7 +387,7 @@
     <div class="login-container">
         <div class="login-box">
             <div class="login-logo">
-                <img src="https://github.com/persiancom/filmbin/blob/main/file_000000009994720aa38ea02c903cd1f7.png?raw=true" alt="Logo">
+                <img src="https://github.com/persiancom/filmbin/blob/main/file_000000007c1071fbadfcb33b99bad87e.png?raw=true" alt="Logo" loading="eager">
             </div>
             <h2>ورود به سینما</h2>
             <div class="input-group">
@@ -370,30 +404,41 @@
     </div>
 </div>
 
-<!-- صفحه اصلی سایت (بعد از ورود) -->
+<!-- صفحه اصلی سایت -->
 <div id="appPage" class="app-page" style="display: none;">
     <div class="container">
-        <!-- هدر ادمین/کاربر -->
-        <div class="admin-header">
-            <div>
+        <div class="main-header">
+            <div class="user-info">
                 <span style="color:#ffaaaa;">خوش آمدی، </span>
                 <strong id="currentUserDisplay"></strong>
-                <span id="adminBadge" class="admin-badge" style="display: none; margin-right: 15px;">مدیر</span>
+                <button id="adminPanelBtn" class="admin-link-btn" style="display: none;" onclick="showAdminPage()">👑 پنل مدیریت</button>
             </div>
             <button class="logout-btn" onclick="logout()">خروج</button>
         </div>
 
-        <!-- بنر تبلیغاتی بزرگ -->
         <div class="hero-banner">
-            <img src="https://github.com/persiancom/filmbin/blob/main/file_00000000d35471fb9298f545464b46f0.png?raw=true" alt="Hero Banner">
+            <img src="https://github.com/persiancom/filmbin/blob/main/file_00000000d35471fb9298f545464b46f0.png?raw=true" alt="Hero Banner" loading="eager">
         </div>
         <div class="hero-text">
             <h2>✨ دانلود و تماشای فیلم و سریال ایرانی و خارجی ✨</h2>
         </div>
 
-        <!-- پنل مدیریت (فقط برای ادمین) -->
-        <div id="adminPanel" class="admin-panel" style="display: none;">
-            <h3>👑 پنل مدیریت کاربران</h3>
+        <div id="moviesGrid" class="movies-grid"></div>
+
+        <div class="footer">
+            تهیه شده توسط Hamidreza
+        </div>
+    </div>
+</div>
+
+<!-- صفحه پنل مدیریت (جداگانه) -->
+<div id="adminPage" class="admin-page">
+    <div class="admin-container">
+        <div class="admin-header">
+            <h3 style="color:#ff8888;">👑 پنل مدیریت کاربران</h3>
+            <button class="back-to-site" onclick="showMainPage()">↩️ بازگشت به سایت</button>
+        </div>
+        <div class="admin-panel-box">
             <div class="add-user-form">
                 <input type="text" id="newUsername" placeholder="نام کاربری جدید">
                 <input type="text" id="newPassword" placeholder="رمز عبور">
@@ -408,25 +453,18 @@
                 </table>
             </div>
         </div>
-
-        <!-- گرید فیلم‌ها و سریال‌ها -->
-        <div id="moviesGrid" class="movies-grid"></div>
-
-        <div class="footer">
-            تهیه شده توسط Hamidreza
-        </div>
     </div>
 </div>
 
 <script>
-    // ========== دیتابیس کاربران ==========
+    // دیتابیس کاربران
     let users = [
         { username: "حمیدرضا", password: "CTF_22", role: "admin", lastLogin: "" }
     ];
 
     let currentUser = null;
 
-    // ========== سریال‌ها با پوستر کامل ==========
+    // سریال‌ها
     const moviesData = [
         { id: 1, title: "سریال گل سنگ", type: "سریال", image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp", downloadLink: "", watchLink: "" },
         { id: 2, title: "سریال بی عاطفه", type: "سریال", image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg", downloadLink: "", watchLink: "" },
@@ -437,7 +475,6 @@
         { id: 7, title: "سریال From", type: "سریال", image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100", downloadLink: "", watchLink: "" }
     ];
 
-    // بارگذاری کاربران از localStorage
     function loadUsers() {
         const saved = localStorage.getItem("cinema_users");
         if (saved) {
@@ -451,7 +488,6 @@
         localStorage.setItem("cinema_users", JSON.stringify(users));
     }
 
-    // به‌روزرسانی آخرین ورود
     function updateLastLogin(username) {
         const user = users.find(u => u.username === username);
         if (user) {
@@ -461,7 +497,6 @@
         }
     }
 
-    // تلاش برای ورود
     function attemptLogin() {
         const username = document.getElementById("loginUsername").value.trim();
         const password = document.getElementById("loginPassword").value;
@@ -471,26 +506,32 @@
             currentUser = user;
             updateLastLogin(username);
             localStorage.setItem("cinema_currentUser", JSON.stringify({ username: user.username, role: user.role }));
-            showApp();
+            showMainPage();
         } else {
             document.getElementById("loginError").innerText = "❌ نام کاربری یا رمز عبور اشتباه است";
         }
     }
 
-    function showApp() {
+    function showMainPage() {
         document.getElementById("loginPage").style.display = "none";
         document.getElementById("appPage").style.display = "block";
+        document.getElementById("adminPage").style.display = "none";
         document.getElementById("currentUserDisplay").innerText = currentUser.username;
         
+        const adminBtn = document.getElementById("adminPanelBtn");
         if (currentUser.role === "admin") {
-            document.getElementById("adminBadge").style.display = "inline-block";
-            document.getElementById("adminPanel").style.display = "block";
-            renderUsersTable();
+            adminBtn.style.display = "inline-block";
         } else {
-            document.getElementById("adminBadge").style.display = "none";
-            document.getElementById("adminPanel").style.display = "none";
+            adminBtn.style.display = "none";
         }
         renderMovies();
+    }
+
+    function showAdminPage() {
+        if (currentUser.role !== "admin") return;
+        document.getElementById("appPage").style.display = "none";
+        document.getElementById("adminPage").style.display = "block";
+        renderUsersTable();
     }
 
     function logout() {
@@ -498,11 +539,11 @@
         localStorage.removeItem("cinema_currentUser");
         document.getElementById("loginPage").style.display = "flex";
         document.getElementById("appPage").style.display = "none";
+        document.getElementById("adminPage").style.display = "none";
         document.getElementById("loginUsername").value = "";
         document.getElementById("loginPassword").value = "";
     }
 
-    // مدیریت کاربران (فقط ادمین)
     function renderUsersTable() {
         const tbody = document.getElementById("usersTableBody");
         tbody.innerHTML = "";
@@ -550,13 +591,12 @@
         }
     }
 
-    // نمایش فیلم‌ها و سریال‌ها
     function renderMovies() {
         const grid = document.getElementById("moviesGrid");
         grid.innerHTML = moviesData.map(movie => `
             <div class="card">
                 <div class="card-img">
-                    <img src="${movie.image}" alt="${movie.title}" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
+                    <img src="${movie.image}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
                 </div>
                 <div class="card-content">
                     <div class="card-title">${movie.title}</div>
@@ -570,7 +610,6 @@
         `).join("");
     }
 
-    // چک کردن session در ابتدا
     function checkSession() {
         const saved = localStorage.getItem("cinema_currentUser");
         if (saved) {
@@ -578,12 +617,13 @@
             const user = users.find(u => u.username === userData.username && u.role === userData.role);
             if (user) {
                 currentUser = user;
-                showApp();
+                showMainPage();
                 return;
             }
         }
         document.getElementById("loginPage").style.display = "flex";
         document.getElementById("appPage").style.display = "none";
+        document.getElementById("adminPage").style.display = "none";
     }
 
     loadUsers();
