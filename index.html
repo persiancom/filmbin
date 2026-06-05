@@ -12,13 +12,21 @@
         }
 
         body {
-            background: radial-gradient(circle at 20% 10%, #0a0000 0%, #1a0101 50%, #000000 100%);
+            background: linear-gradient(135deg, #1a0000 0%, #3a0000 25%, #1a0000 50%, #4a0000 75%, #1a0000 100%);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
             font-family: 'Segoe UI', 'Poppins', Tahoma, sans-serif;
             min-height: 100vh;
             color: #fff;
         }
 
-        /* صفحه ورود - وسط چین شده برای تلویزیون */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* صفحه ورود */
         .login-page {
             display: flex;
             justify-content: center;
@@ -34,11 +42,12 @@
         }
 
         .login-box {
-            background: linear-gradient(145deg, #0f0505, #1a0808);
+            background: rgba(30, 10, 10, 0.5);
+            backdrop-filter: blur(15px);
             border-radius: 50px;
             padding: 50px 40px;
-            border: 1px solid #ff2a2a40;
-            box-shadow: 0 0 60px rgba(255, 0, 0, 0.25);
+            border: 1px solid rgba(255, 60, 60, 0.5);
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.2);
             text-align: center;
         }
 
@@ -79,7 +88,8 @@
         .input-group input {
             width: 100%;
             padding: 16px 20px;
-            background: #2a0a0a;
+            background: rgba(50, 20, 20, 0.7);
+            backdrop-filter: blur(5px);
             border: 2px solid #cc3333;
             border-radius: 40px;
             color: white;
@@ -118,37 +128,45 @@
             font-size: 0.9rem;
         }
 
-        /* هدر اصلی */
+        /* هدر اصلی - دکمه‌های کوچک و جمع‌وجور */
         .main-header {
-            background: linear-gradient(135deg, rgba(180, 20, 30, 0.3), rgba(0, 0, 0, 0.7));
-            border-radius: 30px;
-            padding: 18px 30px;
-            margin-bottom: 30px;
+            background: rgba(30, 10, 10, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 12px 25px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            border: 1px solid #ff3333;
-            backdrop-filter: blur(5px);
+            gap: 12px;
+            border: 1px solid rgba(255, 50, 50, 0.4);
         }
 
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
+        }
+
+        .user-info span {
+            font-size: 0.85rem;
+        }
+
+        .user-info strong {
+            font-size: 0.9rem;
         }
 
         .admin-link-btn {
             background: #cc0000;
             border: none;
-            padding: 10px 25px;
-            border-radius: 40px;
+            padding: 6px 16px;
+            border-radius: 25px;
             color: white;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             transition: 0.2s;
         }
 
@@ -158,13 +176,14 @@
         }
 
         .logout-btn {
-            background: #2a0a0a;
+            background: rgba(50, 20, 20, 0.7);
             border: 1px solid #cc3333;
-            padding: 10px 25px;
-            border-radius: 40px;
+            padding: 6px 16px;
+            border-radius: 25px;
             color: white;
             cursor: pointer;
             transition: 0.2s;
+            font-size: 0.75rem;
         }
 
         .logout-btn:hover {
@@ -210,6 +229,41 @@
             font-weight: bold;
         }
 
+        /* دکمه‌های دسته‌بندی */
+        .category-tabs {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: rgba(30, 10, 10, 0.6);
+            backdrop-filter: blur(10px);
+            border: 2px solid #cc3333;
+            padding: 10px 30px;
+            border-radius: 50px;
+            color: #ffaaaa;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .category-btn.active {
+            background: #cc0000;
+            color: white;
+            border-color: #ff7777;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .category-btn:hover {
+            background: #aa0000;
+            color: white;
+            transform: scale(1.02);
+        }
+
         /* گرید کارت‌ها */
         .movies-grid {
             display: grid;
@@ -219,18 +273,20 @@
         }
 
         .card {
-            background: linear-gradient(145deg, #0f0505, #1a0808);
+            background: rgba(30, 10, 10, 0.45);
+            backdrop-filter: blur(12px);
             border-radius: 25px;
             overflow: hidden;
-            border: 1px solid #ff2a2a40;
+            border: 1px solid rgba(255, 60, 60, 0.4);
             transition: all 0.3s ease;
             box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
         .card:hover {
             transform: translateY(-8px);
-            border-color: #ff3333;
-            box-shadow: 0 15px 35px rgba(255, 0, 0, 0.2);
+            border-color: #ff5555;
+            box-shadow: 0 15px 35px rgba(255, 0, 0, 0.25);
+            background: rgba(40, 15, 15, 0.55);
         }
 
         .card-img {
@@ -258,19 +314,8 @@
         .card-title {
             font-size: 1.3rem;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #ffcccc;
-        }
-
-        .card-type {
-            display: inline-block;
-            background: #cc0000;
-            padding: 5px 15px;
-            border-radius: 25px;
-            font-size: 0.75rem;
-            margin-bottom: 18px;
-            font-weight: bold;
-            box-shadow: 0 0 8px #ff0000;
         }
 
         /* منوی کشویی قسمتها */
@@ -279,34 +324,35 @@
         }
 
         .episodes-dropdown {
-            background: #2a0a0a;
-            border: 1px solid #cc3333;
-            border-radius: 15px;
+            background: rgba(40, 15, 15, 0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 50, 50, 0.4);
+            border-radius: 12px;
             margin-top: 10px;
             overflow: hidden;
         }
 
         .dropdown-header {
-            background: linear-gradient(135deg, #3a0a0a, #2a0505);
-            padding: 12px 18px;
+            background: rgba(50, 15, 15, 0.7);
+            padding: 10px 15px;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
             color: #ffaaaa;
+            font-size: 0.85rem;
             transition: 0.2s;
-            border-radius: 15px;
         }
 
         .dropdown-header:hover {
-            background: #4a1515;
+            background: rgba(80, 25, 25, 0.8);
             color: #ffcccc;
         }
 
         .dropdown-arrow {
             transition: transform 0.3s ease;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
 
         .dropdown-arrow.open {
@@ -317,7 +363,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out;
-            background: #1a0505;
+            background: rgba(25, 8, 8, 0.7);
         }
 
         .dropdown-content.show {
@@ -329,28 +375,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 18px;
-            border-top: 1px solid #332222;
+            padding: 10px 15px;
+            border-top: 1px solid rgba(255, 50, 50, 0.2);
             text-decoration: none;
             color: #ffcccc;
             transition: 0.2s;
+            font-size: 0.85rem;
         }
 
         .episode-link:hover {
-            background: #2a0a0a;
-            color: #ff6666;
-            padding-right: 25px;
+            background: rgba(60, 20, 20, 0.8);
+            color: #ff8888;
+            padding-right: 22px;
         }
 
         .episode-name {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .download-badge {
             background: #b91c1c;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: bold;
         }
 
@@ -359,7 +406,7 @@
             margin-top: 70px;
             padding: 30px;
             color: #ffaa33;
-            border-top: 1px solid #332222;
+            border-top: 1px solid rgba(255, 50, 50, 0.3);
             font-size: 0.85rem;
         }
 
@@ -375,22 +422,28 @@
         }
 
         .admin-header {
-            background: linear-gradient(135deg, rgba(180, 20, 30, 0.3), rgba(0, 0, 0, 0.7));
-            border-radius: 30px;
-            padding: 20px 30px;
+            background: rgba(30, 10, 10, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 15px 25px;
             margin-bottom: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            border: 1px solid #ff3333;
+            border: 1px solid rgba(255, 50, 50, 0.4);
+        }
+
+        .admin-header h3 {
+            font-size: 1.1rem;
         }
 
         .admin-panel-box {
-            background: #0f0505;
-            border-radius: 30px;
+            background: rgba(30, 10, 10, 0.45);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
             padding: 25px;
-            border: 1px solid #ff3333;
+            border: 1px solid rgba(255, 50, 50, 0.4);
         }
 
         .users-table {
@@ -403,24 +456,30 @@
         }
 
         th, td {
-            padding: 14px;
+            padding: 12px;
             text-align: right;
-            border-bottom: 1px solid #332222;
+            border-bottom: 1px solid rgba(255, 50, 50, 0.2);
         }
 
         th {
             color: #ffaaaa;
             font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        td {
+            font-size: 0.85rem;
         }
 
         .back-to-site {
-            background: #2a0a0a;
+            background: rgba(50, 20, 20, 0.7);
             border: 1px solid #cc3333;
-            padding: 10px 25px;
-            border-radius: 30px;
+            padding: 6px 18px;
+            border-radius: 25px;
             color: white;
             cursor: pointer;
             transition: 0.2s;
+            font-size: 0.75rem;
         }
 
         .back-to-site:hover {
@@ -437,6 +496,13 @@
             .login-box {
                 padding: 35px 25px;
                 margin: 0 15px;
+            }
+            .category-btn {
+                padding: 6px 18px;
+                font-size: 0.85rem;
+            }
+            .main-header {
+                padding: 10px 18px;
             }
         }
 
@@ -477,7 +543,7 @@
     <div class="container">
         <div class="main-header">
             <div class="user-info">
-                <span style="color:#ffaaaa;">خوش آمدی، </span>
+                <span>خوش آمدی،</span>
                 <strong id="currentUserDisplay"></strong>
                 <button id="adminPanelBtn" class="admin-link-btn" style="display: none;" onclick="showAdminPage()">👑 پنل مدیریت</button>
             </div>
@@ -491,6 +557,12 @@
             <h2>✨ دانلود و تماشای فیلم و سریال ایرانی و خارجی ✨</h2>
         </div>
 
+        <!-- دکمه‌های دسته‌بندی ایرانی / خارجی -->
+        <div class="category-tabs">
+            <button class="category-btn active" data-category="iranian" onclick="filterMovies('iranian')">🇮🇷 سریال‌های ایرانی</button>
+            <button class="category-btn" data-category="foreign" onclick="filterMovies('foreign')">🌍 سریال‌های خارجی</button>
+        </div>
+
         <div id="moviesGrid" class="movies-grid"></div>
 
         <div class="footer">
@@ -502,7 +574,7 @@
 <div id="adminPage" class="admin-page">
     <div class="admin-container">
         <div class="admin-header">
-            <h3 style="color:#ff8888;">👑 پنل مدیریت - گزارش ورود کاربران</h3>
+            <h3>👑 پنل مدیریت - گزارش ورود کاربران</h3>
             <button class="back-to-site" onclick="showMainPage()">↩️ بازگشت به سایت</button>
         </div>
         
@@ -521,13 +593,14 @@
 
 <script>
     // ==========================================
-    // ✅ لینک فیلم و سریال ها با چندین قسمت
+    // ✅ لینک فیلم و سریال ها با دسته‌بندی ایرانی/خارجی
     // ==========================================
     let moviesData = [
+        // سریال‌های ایرانی
         {
             id: 1,
             title: "سریال گل سنگ",
-            type: "سریال",
+            category: "iranian",
             image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp",
             episodes: [
                 { name: "قسمت 1", url: "https://cf.linkulu.com/dl/6a2163946a48881ec0942904" },
@@ -538,7 +611,7 @@
         {
             id: 2,
             title: "سریال بی عاطفه",
-            type: "سریال",
+            category: "iranian",
             image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg",
             episodes: [
                 { name: "قسمت 1", url: "" },
@@ -549,7 +622,7 @@
         {
             id: 3,
             title: "سریال بیست و یک",
-            type: "سریال",
+            category: "iranian",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnQWgP4VBNgnXCM_RbsWnGW0NohgRNdxbZxG4zPZWc53wv9tD8s2h4pk&s=10",
             episodes: [
                 { name: "فیلم کامل", url: "https://cf.linkulu.com/dl/6a2192cd6a48881ec0942d8e" }
@@ -558,7 +631,7 @@
         {
             id: 4,
             title: "سریال هزار و یک شب",
-            type: "سریال",
+            category: "iranian",
             image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80",
             episodes: [
                 { name: "قسمت 1", url: "" },
@@ -568,7 +641,7 @@
         {
             id: 5,
             title: "سریال بدنام",
-            type: "سریال",
+            category: "iranian",
             image: "https://static.cdn.asset.filimo.com/flmt/mov_174988_343591.jpg?width=300&quality=85&sharpen=80&secret=ZaRTIhChiq5rD660aRzxNw",
             episodes: [
                 { name: "قسمت 1", url: "" },
@@ -578,17 +651,18 @@
         {
             id: 6,
             title: "سریال مو به مو",
-            type: "سریال",
+            category: "iranian",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkX72DwIPWEuz_0ETODdFnEM_HBYcq4VN9MjpdH1pZ8ipW5-sItCTQTUlI&s=10",
             episodes: [
                 { name: "قسمت 1", url: "" },
                 { name: "قسمت 2", url: "" }
             ]
         },
+        // سریال‌های خارجی
         {
             id: 7,
             title: "سریال From",
-            type: "سریال",
+            category: "foreign",
             image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100",
             episodes: [
                 { name: "فصل 1 - قسمت 1", url: "" },
@@ -598,7 +672,7 @@
         {
             id: 8,
             title: "سریال بوروها 2026",
-            type: "سریال",
+            category: "foreign",
             image: "https://static.cdn.asset.filimo.com/flmt/mov_175972_344155.jpg?width=300&quality=85&sharpen=80&secret=vhtlGHyWzzhfsjPrUDybIA",
             episodes: [
                 { name: "قسمت اول", url: "https://mci.uptv.ir/uptv/serial5/The%20Boroughs/1/1780616The.Boroughs.S01.E01.720p.Sub_UPTV.co178061694.mkv?1780616943" },
@@ -608,7 +682,7 @@
     ];
 
     // ==========================================
-    // ✅ لیست کاربران (اینجا یوزر و رمز جدید اضافه کن)
+    // ✅ لیست کاربران
     // ==========================================
     let users = [
         { username: "حمیدرضا", password: "CTF_22", role: "admin", lastLogin: "" },
@@ -616,6 +690,7 @@
     ];
 
     let currentUser = null;
+    let currentCategory = "iranian";
 
     // ========== توابع ==========
     function loadUsers() {
@@ -649,13 +724,34 @@
         }
     }
 
-    // ========== نمایش سریال‌ها با منوی کشویی ==========
+    // فیلتر کردن فیلم‌ها بر اساس دسته‌بندی
+    function filterMovies(category) {
+        currentCategory = category;
+        
+        // بروزرسانی کلاس active دکمه‌ها
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            if (btn.getAttribute('data-category') === category) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        renderMovies();
+    }
+
     function renderMovies() {
         const grid = document.getElementById("moviesGrid");
         if (!grid) return;
         
-        grid.innerHTML = moviesData.map(movie => {
-            // بررسی وجود قسمت‌های معتبر
+        const filteredMovies = moviesData.filter(movie => movie.category === currentCategory);
+        
+        if (filteredMovies.length === 0) {
+            grid.innerHTML = `<div style="text-align:center; grid-column:1/-1; padding:60px; background:rgba(30,10,10,0.5); backdrop-filter:blur(10px); border-radius:30px;">🎬 در این دسته سریالی وجود ندارد</div>`;
+            return;
+        }
+        
+        grid.innerHTML = filteredMovies.map(movie => {
             const hasValidEpisodes = movie.episodes && movie.episodes.length > 0;
             
             return `
@@ -665,7 +761,6 @@
                     </div>
                     <div class="card-content">
                         <div class="card-title">${escapeHtml(movie.title)}</div>
-                        <div class="card-type">${movie.type}</div>
                         
                         ${hasValidEpisodes ? `
                             <div class="episodes-section">
@@ -744,6 +839,17 @@
         
         const adminBtn = document.getElementById("adminPanelBtn");
         adminBtn.style.display = currentUser.role === "admin" ? "inline-block" : "none";
+        
+        // ریست کردن به دسته ایرانی
+        currentCategory = "iranian";
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            if (btn.getAttribute('data-category') === "iranian") {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
         renderMovies();
     }
     
