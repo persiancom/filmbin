@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>سینما خانگی | دانلود فیلم و سریال</title>
     <style>
         * {
@@ -18,11 +18,8 @@
             color: #fff;
         }
 
-        .login-page, .app-page, .admin-page {
-            min-height: 100vh;
-        }
-
-        .login-container {
+        /* صفحه ورود - وسط چین شده برای تلویزیون */
+        .login-page {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,22 +27,26 @@
             padding: 20px;
         }
 
+        .login-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
         .login-box {
             background: linear-gradient(145deg, #0f0505, #1a0808);
-            border-radius: 40px;
-            padding: 45px 35px;
-            width: 100%;
-            max-width: 450px;
+            border-radius: 50px;
+            padding: 50px 40px;
             border: 1px solid #ff2a2a40;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 60px rgba(255, 0, 0, 0.25);
             text-align: center;
         }
 
         .login-logo {
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            margin: 0 auto 25px;
+            margin: 0 auto 30px;
             overflow: hidden;
             border: 3px solid #cc0000;
             background: #1a0808;
@@ -59,8 +60,8 @@
 
         .login-box h2 {
             color: #ff8888;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
+            margin-bottom: 35px;
+            font-size: 2rem;
         }
 
         .input-group {
@@ -70,38 +71,40 @@
 
         .input-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: #ffaaaa;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .input-group input {
             width: 100%;
-            padding: 14px 18px;
+            padding: 16px 20px;
             background: #2a0a0a;
-            border: 1px solid #cc3333;
-            border-radius: 30px;
+            border: 2px solid #cc3333;
+            border-radius: 40px;
             color: white;
-            font-size: 1rem;
+            font-size: 1.1rem;
             outline: none;
+            transition: 0.2s;
         }
 
         .input-group input:focus {
             border-color: #ff0000;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
         }
 
         .login-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: #cc0000;
             border: none;
             border-radius: 40px;
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             transition: 0.2s;
+            margin-top: 15px;
         }
 
         .login-btn:hover {
@@ -111,10 +114,11 @@
 
         .error-msg {
             color: #ff6666;
-            margin-top: 15px;
-            font-size: 0.85rem;
+            margin-top: 20px;
+            font-size: 0.9rem;
         }
 
+        /* هدر اصلی */
         .main-header {
             background: linear-gradient(135deg, rgba(180, 20, 30, 0.3), rgba(0, 0, 0, 0.7));
             border-radius: 30px;
@@ -126,6 +130,7 @@
             flex-wrap: wrap;
             gap: 15px;
             border: 1px solid #ff3333;
+            backdrop-filter: blur(5px);
         }
 
         .user-info {
@@ -138,20 +143,32 @@
         .admin-link-btn {
             background: #cc0000;
             border: none;
-            padding: 8px 20px;
-            border-radius: 30px;
+            padding: 10px 25px;
+            border-radius: 40px;
             color: white;
             cursor: pointer;
             font-weight: bold;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .admin-link-btn:hover {
+            background: #ff1a1a;
+            transform: scale(1.02);
         }
 
         .logout-btn {
             background: #2a0a0a;
             border: 1px solid #cc3333;
-            padding: 8px 20px;
-            border-radius: 30px;
+            padding: 10px 25px;
+            border-radius: 40px;
             color: white;
             cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #4a1515;
         }
 
         .container {
@@ -160,15 +177,17 @@
             padding: 20px;
         }
 
+        /* بنر */
         .hero-banner {
             margin-bottom: 30px;
             border-radius: 30px;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         .hero-banner img {
             width: 100%;
-            max-height: 380px;
+            max-height: 400px;
             object-fit: cover;
             display: block;
         }
@@ -186,94 +205,165 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            font-weight: bold;
         }
 
+        /* گرید کارت‌ها */
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
             margin-top: 30px;
         }
 
         .card {
             background: linear-gradient(145deg, #0f0505, #1a0808);
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
             border: 1px solid #ff2a2a40;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: #ff3333;
+            box-shadow: 0 15px 35px rgba(255, 0, 0, 0.2);
         }
 
         .card-img {
             width: 100%;
-            height: 380px;
+            height: 400px;
             overflow: hidden;
+            position: relative;
         }
 
         .card-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-img img {
+            transform: scale(1.05);
         }
 
         .card-content {
-            padding: 18px;
+            padding: 20px;
         }
 
         .card-title {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            color: #ffcccc;
         }
 
         .card-type {
             display: inline-block;
             background: #cc0000;
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-size: 0.75rem;
+            margin-bottom: 18px;
+            font-weight: bold;
+            box-shadow: 0 0 8px #ff0000;
+        }
+
+        /* منوی کشویی قسمتها */
+        .episodes-section {
+            margin-top: 10px;
+        }
+
+        .episodes-dropdown {
+            background: #2a0a0a;
+            border: 1px solid #cc3333;
+            border-radius: 15px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .dropdown-header {
+            background: linear-gradient(135deg, #3a0a0a, #2a0505);
+            padding: 12px 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #ffaaaa;
+            transition: 0.2s;
+            border-radius: 15px;
+        }
+
+        .dropdown-header:hover {
+            background: #4a1515;
+            color: #ffcccc;
+        }
+
+        .dropdown-arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .dropdown-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background: #1a0505;
+        }
+
+        .dropdown-content.show {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .episode-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            border-top: 1px solid #332222;
+            text-decoration: none;
+            color: #ffcccc;
+            transition: 0.2s;
+        }
+
+        .episode-link:hover {
+            background: #2a0a0a;
+            color: #ff6666;
+            padding-right: 25px;
+        }
+
+        .episode-name {
+            font-size: 0.9rem;
+        }
+
+        .download-badge {
+            background: #b91c1c;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.7rem;
-            margin-bottom: 15px;
-        }
-
-        .card-links {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            display: inline-block;
-        }
-
-        .btn-download {
-            background: #b91c1c;
-            color: white;
-        }
-
-        .btn-watch {
-            background: #2d0a0a;
-            color: #ff8888;
-            border: 1px solid #aa3333;
+            font-weight: bold;
         }
 
         .footer {
             text-align: center;
-            margin-top: 60px;
-            padding: 25px;
+            margin-top: 70px;
+            padding: 30px;
             color: #ffaa33;
             border-top: 1px solid #332222;
+            font-size: 0.85rem;
         }
 
+        /* پنل ادمین */
         .admin-page {
             display: none;
             padding: 20px;
@@ -293,6 +383,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            border: 1px solid #ff3333;
         }
 
         .admin-panel-box {
@@ -312,13 +403,14 @@
         }
 
         th, td {
-            padding: 12px;
+            padding: 14px;
             text-align: right;
             border-bottom: 1px solid #332222;
         }
 
         th {
             color: #ffaaaa;
+            font-weight: bold;
         }
 
         .back-to-site {
@@ -328,18 +420,11 @@
             border-radius: 30px;
             color: white;
             cursor: pointer;
+            transition: 0.2s;
         }
 
-        .download-code-btn {
-            background: #2ea043;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 20px;
-            width: 100%;
+        .back-to-site:hover {
+            background: #4a1515;
         }
 
         @media (max-width: 768px) {
@@ -347,7 +432,20 @@
                 grid-template-columns: 1fr;
             }
             .hero-text h2 {
-                font-size: 1rem;
+                font-size: 1.1rem;
+            }
+            .login-box {
+                padding: 35px 25px;
+                margin: 0 15px;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .login-container {
+                max-width: 600px;
+            }
+            .login-box {
+                padding: 60px 50px;
             }
         }
     </style>
@@ -383,7 +481,7 @@
                 <strong id="currentUserDisplay"></strong>
                 <button id="adminPanelBtn" class="admin-link-btn" style="display: none;" onclick="showAdminPage()">👑 پنل مدیریت</button>
             </div>
-            <button class="logout-btn" onclick="logout()">خروج</button>
+            <button class="logout-btn" onclick="logout()">🚪 خروج</button>
         </div>
 
         <div class="hero-banner">
@@ -396,7 +494,7 @@
         <div id="moviesGrid" class="movies-grid"></div>
 
         <div class="footer">
-            تهیه شده توسط Hamidreza
+            🎬 تهیه شده توسط Hamidreza
         </div>
     </div>
 </div>
@@ -417,17 +515,13 @@
                     <tbody id="usersTableBody"></tbody>
                 </table>
             </div>
-            <button class="download-code-btn" onclick="downloadUpdatedCode()">📥 دانلود کد به‌روز شده (برای آپلود روی گیت‌هاب)</button>
-            <p style="font-size: 0.75rem; color: #888; margin-top: 15px; text-align: center;">
-                🔒 بعد از تغییر لینک فیلم‌ها در کد، این دکمه رو بزن تا فایل HTML جدید دانلود بشه. سپس فایل رو روی گیت‌هاب آپلود کن.
-            </p>
         </div>
     </div>
 </div>
 
 <script>
     // ==========================================
-    // ✅ لینک فیلم و سریال ها (اینجا رو عوض کن)
+    // ✅ لینک فیلم و سریال ها با چندین قسمت
     // ==========================================
     let moviesData = [
         {
@@ -435,80 +529,82 @@
             title: "سریال گل سنگ",
             type: "سریال",
             image: "https://zardfilm.in/wp-content/uploads/2026/04/episode-2-gole--500x706.webp",
-            downloadLink: "https://cf.linkulu.com/dl/6a2163946a48881ec0942904",  // لینک دانلود رو اینجا بذار
-            watchLink: "",     // لینک تماشای آنلاین رو اینجا بذار
-            downloadTitle: "دانلود سریال گل سنگ",
-            watchTitle: "تماشای آنلاین گل سنگ"
+            episodes: [
+                { name: "قسمت 1", url: "https://cf.linkulu.com/dl/6a2163946a48881ec0942904" },
+                { name: "قسمت 2", url: "" },
+                { name: "قسمت 3", url: "" }
+            ]
         },
         {
             id: 2,
             title: "سریال بی عاطفه",
             type: "سریال",
             image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg",
-            downloadLink: "",
-            watchLink: "",
-            downloadTitle: "دانلود سریال بی عاطفه",
-            watchTitle: "تماشای آنلاین بی عاطفه"
+            episodes: [
+                { name: "قسمت 1", url: "" },
+                { name: "قسمت 2", url: "" },
+                { name: "قسمت 3", url: "" }
+            ]
         },
         {
             id: 3,
             title: "سریال بیست و یک",
             type: "سریال",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPnQWgP4VBNgnXCM_RbsWnGW0NohgRNdxbZxG4zPZWc53wv9tD8s2h4pk&s=10",
-            downloadLink: "https://cf.linkulu.com/dl/6a2192cd6a48881ec0942d8e",
-            watchLink: "https://cf.linkulu.com/dl/6a2192cd6a48881ec0942d8e",
-            downloadTitle: "دانلود سریال بیست و یک",
-            watchTitle: "تماشای آنلاین بیست و یک"
+            episodes: [
+                { name: "فیلم کامل", url: "https://cf.linkulu.com/dl/6a2192cd6a48881ec0942d8e" }
+            ]
         },
         {
             id: 4,
             title: "سریال هزار و یک شب",
             type: "سریال",
             image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80",
-            downloadLink: "",
-            watchLink: "",
-            downloadTitle: "دانلود سریال هزار و یک شب",
-            watchTitle: "تماشای آنلاین هزار و یک شب"
+            episodes: [
+                { name: "قسمت 1", url: "" },
+                { name: "قسمت 2", url: "" }
+            ]
         },
         {
             id: 5,
             title: "سریال بدنام",
             type: "سریال",
             image: "https://static.cdn.asset.filimo.com/flmt/mov_174988_343591.jpg?width=300&quality=85&sharpen=80&secret=ZaRTIhChiq5rD660aRzxNw",
-            downloadLink: "",
-            watchLink: "",
-            downloadTitle: "دانلود سریال بدنام",
-            watchTitle: "تماشای آنلاین بدنام"
+            episodes: [
+                { name: "قسمت 1", url: "" },
+                { name: "قسمت 2", url: "" }
+            ]
         },
         {
             id: 6,
             title: "سریال مو به مو",
             type: "سریال",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkX72DwIPWEuz_0ETODdFnEM_HBYcq4VN9MjpdH1pZ8ipW5-sItCTQTUlI&s=10",
-            downloadLink: "",
-            watchLink: "",
-            downloadTitle: "دانلود سریال مو به مو",
-            watchTitle: "تماشای آنلاین مو به مو"
+            episodes: [
+                { name: "قسمت 1", url: "" },
+                { name: "قسمت 2", url: "" }
+            ]
         },
         {
             id: 7,
             title: "سریال From",
             type: "سریال",
             image: "https://cdn.paraj.ir/images/66acd8101cecfa327abce7b7?w=3840&q=100",
-            downloadLink: "",
-            watchLink: "",
-            downloadTitle: "دانلود سریال From",
-            watchTitle: "تماشای آنلاین From"
+            episodes: [
+                { name: "فصل 1 - قسمت 1", url: "" },
+                { name: "فصل 1 - قسمت 2", url: "" }
+            ]
         },
         {
             id: 8,
             title: "سریال بوروها 2026",
-            image: "https://static.cdn.asset.filimo.com/flmt/mov_175972_344155.jpg?width=300&quality=85&sharpen=80&secret=vhtlGHyWzzhfsjPrUDybIA", 
-            downloadLink:"https://mci.uptv.ir/uptv/serial5/The%20Boroughs/1/1780616The.Boroughs.S01.E01.720p.Sub_UPTV.co178061694.mkv?1780616943",
-            wachLink: "",
-            downloadTitle: "دانلود قسمت اول",
-            wachTotle: "تماشای آنلاین",
-        },
+            type: "سریال",
+            image: "https://static.cdn.asset.filimo.com/flmt/mov_175972_344155.jpg?width=300&quality=85&sharpen=80&secret=vhtlGHyWzzhfsjPrUDybIA",
+            episodes: [
+                { name: "قسمت اول", url: "https://mci.uptv.ir/uptv/serial5/The%20Boroughs/1/1780616The.Boroughs.S01.E01.720p.Sub_UPTV.co178061694.mkv?1780616943" },
+                { name: "قسمت دوم", url: "" }
+            ]
+        }
     ];
 
     // ==========================================
@@ -516,13 +612,12 @@
     // ==========================================
     let users = [
         { username: "حمیدرضا", password: "CTF_22", role: "admin", lastLogin: "" },
-        { username: "TV", password: "CTF22", role: "user", lastLogin: "" },
-        // { username: "سارا", password: "456", role: "user", lastLogin: "" }
+        { username: "TV", password: "CTF22", role: "user", lastLogin: "" }
     ];
 
     let currentUser = null;
 
-    // ========== توابع ذخیره و بارگذاری ==========
+    // ========== توابع ==========
     function loadUsers() {
         const savedLastLogins = localStorage.getItem("cinema_lastLogins");
         if (savedLastLogins) {
@@ -554,26 +649,62 @@
         }
     }
 
-    // ========== توابع نمایش ==========
+    // ========== نمایش سریال‌ها با منوی کشویی ==========
     function renderMovies() {
         const grid = document.getElementById("moviesGrid");
         if (!grid) return;
         
-        grid.innerHTML = moviesData.map(movie => `
-            <div class="card">
-                <div class="card-img">
-                    <img src="${movie.image}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
-                </div>
-                <div class="card-content">
-                    <div class="card-title">${escapeHtml(movie.title)}</div>
-                    <div class="card-type">${movie.type}</div>
-                    <div class="card-links">
-                        ${movie.downloadLink ? `<a href="${escapeHtml(movie.downloadLink)}" class="btn btn-download" target="_blank">⬇️ ${escapeHtml(movie.downloadTitle)}</a>` : '<span style="color:#883333;">⏳ لینک به زودی</span>'}
-                        ${movie.watchLink ? `<a href="${escapeHtml(movie.watchLink)}" class="btn btn-watch" target="_blank">▶️ ${escapeHtml(movie.watchTitle)}</a>` : ''}
+        grid.innerHTML = moviesData.map(movie => {
+            // بررسی وجود قسمت‌های معتبر
+            const hasValidEpisodes = movie.episodes && movie.episodes.length > 0;
+            
+            return `
+                <div class="card">
+                    <div class="card-img">
+                        <img src="${movie.image}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">${escapeHtml(movie.title)}</div>
+                        <div class="card-type">${movie.type}</div>
+                        
+                        ${hasValidEpisodes ? `
+                            <div class="episodes-section">
+                                <div class="episodes-dropdown">
+                                    <div class="dropdown-header" onclick="toggleDropdown(this)">
+                                        <span>📥 لینک‌های دانلود</span>
+                                        <span class="dropdown-arrow">▼</span>
+                                    </div>
+                                    <div class="dropdown-content">
+                                        ${movie.episodes.map(ep => `
+                                            <a href="${ep.url ? escapeHtml(ep.url) : '#'}" 
+                                               class="episode-link" 
+                                               ${ep.url ? 'target="_blank"' : 'style="opacity:0.6; cursor:not-allowed;" onclick="return false;"'}>
+                                                <span class="episode-name">${escapeHtml(ep.name)}</span>
+                                                ${ep.url ? '<span class="download-badge">دانلود ⬇️</span>' : '<span class="download-badge" style="background:#442222;">به زودی</span>'}
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        ` : '<span style="color:#883333; display:block; padding:10px 0;">⏳ لینک‌ها به زودی اضافه می‌شوند</span>'}
                     </div>
                 </div>
-            </div>
-        `).join("");
+            `;
+        }).join("");
+    }
+    
+    // تابع باز و بسته شدن منوی کشویی
+    function toggleDropdown(header) {
+        const content = header.nextElementSibling;
+        const arrow = header.querySelector('.dropdown-arrow');
+        
+        if (content.classList.contains('show')) {
+            content.classList.remove('show');
+            arrow.classList.remove('open');
+        } else {
+            content.classList.add('show');
+            arrow.classList.add('open');
+        }
     }
     
     function renderUsersTable() {
@@ -587,24 +718,6 @@
             row.insertCell(1).innerText = user.role === "admin" ? "مدیر" : "کاربر";
             row.insertCell(2).innerText = user.lastLogin || "هنوز وارد نشده";
         });
-    }
-    
-    function downloadUpdatedCode() {
-        // ساخت کد جدید با لینک‌های به‌روز شده
-        const currentCode = document.documentElement.outerHTML;
-        
-        // دانلود فایل
-        const blob = new Blob([currentCode], { type: "text/html" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "index.html";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        
-        alert("✅ فایل دانلود شد! حالا این فایل رو روی گیت‌هاب آپلود کن تا لینک‌های جدید برای همه نمایش داده بشه.");
     }
     
     // ========== توابع اصلی ==========
@@ -630,11 +743,7 @@
         document.getElementById("currentUserDisplay").innerText = currentUser.username;
         
         const adminBtn = document.getElementById("adminPanelBtn");
-        if (currentUser.role === "admin") {
-            adminBtn.style.display = "inline-block";
-        } else {
-            adminBtn.style.display = "none";
-        }
+        adminBtn.style.display = currentUser.role === "admin" ? "inline-block" : "none";
         renderMovies();
     }
     
@@ -667,7 +776,6 @@
     
     function checkSession() {
         loadUsers();
-        
         const saved = localStorage.getItem("cinema_currentUser");
         if (saved) {
             const userData = JSON.parse(saved);
