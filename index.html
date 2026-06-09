@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>دانلود فیلم و سریال</title>
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/8.10.0/video-js.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -233,7 +235,7 @@
 
         .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             margin-top: 30px;
         }
@@ -302,6 +304,10 @@
             font-size: 0.8rem;
         }
 
+        .dropdown-header:hover {
+            background: rgba(80, 25, 25, 0.8);
+        }
+
         .dropdown-arrow {
             transition: transform 0.3s ease;
         }
@@ -318,7 +324,7 @@
         }
 
         .dropdown-content.show {
-            max-height: 400px;
+            max-height: 500px;
         }
 
         .episode-link {
@@ -329,19 +335,95 @@
             border-top: 1px solid rgba(255, 50, 50, 0.2);
             text-decoration: none;
             color: #ffcccc;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .episode-link:hover {
             background: rgba(60, 20, 20, 0.8);
-            color: #ff8888;
+        }
+
+        .episode-name {
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .episode-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .play-btn {
+            background: #2a7a2a;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            border: none;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .play-btn:hover {
+            background: #3a9a3a;
         }
 
         .download-badge {
             background: #b91c1c;
-            padding: 2px 10px;
+            padding: 3px 10px;
             border-radius: 20px;
             font-size: 0.65rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+        }
+
+        .download-badge:hover {
+            background: #ff1a1a;
+        }
+
+        /* مودال پخش ویدیو */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-modal-content {
+            width: 90%;
+            max-width: 1000px;
+            position: relative;
+        }
+
+        .close-video {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 2001;
+        }
+
+        .close-video:hover {
+            color: #ff0000;
+        }
+
+        .video-js {
+            width: 100%;
+            border-radius: 16px;
         }
 
         .footer {
@@ -355,11 +437,11 @@
 
         @media (max-width: 768px) {
             .movies-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 gap: 12px;
             }
             .card-img {
-                height: 190px;
+                height: 200px;
             }
             .card-title {
                 font-size: 0.85rem;
@@ -370,6 +452,13 @@
             .category-btn {
                 padding: 6px 18px;
                 font-size: 0.85rem;
+            }
+            .episode-link {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .episode-buttons {
+                margin-top: 5px;
             }
         }
     </style>
@@ -427,6 +516,18 @@
     </div>
 </div>
 
+<!-- مودال پخش ویدیو -->
+<div id="videoModal" class="video-modal">
+    <div class="video-modal-content">
+        <button class="close-video" onclick="closeVideoPlayer()">✕</button>
+        <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto">
+            <source src="" type="video/mp4">
+            <p class="vjs-no-js">برای مشاهده ویدیو نیاز به جاوااسکریپت دارید</p>
+        </video>
+    </div>
+</div>
+
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 <script>
     // ==========================================
     // ✅ لیست کاربران
@@ -463,7 +564,7 @@
             category: "iranian",
             image: "https://zbcdn.cloud/files/cache/67480_69aa6bb103d5c1b228294640.4ac18b.jpg",
             episodes: [
-                { name: "قسمت 14", url: "https://cf.linkulu.com/dl/6a2490606a48881ec09485e4" },
+                { name: "قسمت 14", url: "https://cf.linkulu.com/dl/6a2490606a48881ec09485e4" }
             ]
         },
         {
@@ -530,11 +631,12 @@
                 { name: "قسمت هفتم", url: "https://cdn.uptvs.com/?s=11&f=serial5/The%20Boroughs/1/The.Boroughs.S01.E07.720p.Sub_UPTV.co.mkv" },
                 { name: "قسمت هشتم", url: "https://cdn.uptvs.com/?s=11&f=serial5/The%20Boroughs/1/The.Boroughs.S01.E08.720p.Sub_UPTV.co.mkv" }
             ]
-        },
+        }
     ];
 
     let currentUser = null;
     let currentCategory = "iranian";
+    let currentVideoPlayer = null;
 
     function filterMovies(category) {
         currentCategory = category;
@@ -548,6 +650,50 @@
         renderMovies();
     }
 
+    // باز کردن پخش‌کننده ویدیو
+    function playVideo(url, title) {
+        const modal = document.getElementById("videoModal");
+        const video = document.getElementById("my-video");
+        
+        // اگر پلیر قبلی وجود داشت، dispose کن
+        if (currentVideoPlayer) {
+            currentVideoPlayer.dispose();
+        }
+        
+        // ساخت پلیر جدید
+        currentVideoPlayer = videojs(video, {
+            controls: true,
+            autoplay: true,
+            preload: "auto",
+            fluid: true,
+            playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2],
+            controlBar: {
+                volumePanel: true,
+                playbackRateMenuButton: true
+            }
+        });
+        
+        // تنظیم منبع ویدیو
+        currentVideoPlayer.src({ src: url, type: "video/mp4" });
+        currentVideoPlayer.load();
+        
+        // نمایش مودال
+        modal.style.display = "flex";
+        
+        // پخش خودکار
+        currentVideoPlayer.play();
+    }
+    
+    function closeVideoPlayer() {
+        const modal = document.getElementById("videoModal");
+        if (currentVideoPlayer) {
+            currentVideoPlayer.pause();
+            currentVideoPlayer.dispose();
+            currentVideoPlayer = null;
+        }
+        modal.style.display = "none";
+    }
+
     function renderMovies() {
         const grid = document.getElementById("moviesGrid");
         if (!grid) return;
@@ -559,30 +705,33 @@
             return;
         }
         
-        grid.innerHTML = filteredMovies.map(movie => {
+        grid.innerHTML = filteredMovies.map((movie, movieIndex) => {
             const hasValidEpisodes = movie.episodes && movie.episodes.length > 0;
+            // استفاده از id منحصر به فرد برای هر کارت
+            const dropdownId = `dropdown-${movie.id}-${movieIndex}`;
             
             return `
-                <div class="card">
+                <div class="card" id="card-${movie.id}">
                     <div class="card-img">
                         <img src="${movie.image}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
                     </div>
                     <div class="card-content">
                         <div class="card-title">${escapeHtml(movie.title)}</div>
                         ${hasValidEpisodes ? `
-                            <div class="episodes-dropdown">
-                                <div class="dropdown-header" onclick="toggleDropdown(this)">
-                                    <span>📥 لینک‌های دانلود</span>
+                            <div class="episodes-dropdown" data-dropdown="${dropdownId}">
+                                <div class="dropdown-header" onclick="toggleDropdown(this, '${dropdownId}')">
+                                    <span>📥 لینک‌های دانلود و پخش</span>
                                     <span class="dropdown-arrow">▼</span>
                                 </div>
-                                <div class="dropdown-content">
+                                <div class="dropdown-content" id="${dropdownId}">
                                     ${movie.episodes.map(ep => `
-                                        <a href="${ep.url ? escapeHtml(ep.url) : '#'}" 
-                                           class="episode-link" 
-                                           ${ep.url ? 'target="_blank"' : 'style="opacity:0.6; cursor:not-allowed;" onclick="return false;"'}>
+                                        <div class="episode-link">
                                             <span class="episode-name">${escapeHtml(ep.name)}</span>
-                                            ${ep.url ? '<span class="download-badge">دانلود ⬇️</span>' : '<span class="download-badge" style="background:#442222;">به زودی</span>'}
-                                        </a>
+                                            <div class="episode-buttons">
+                                                ${ep.url ? `<button class="play-btn" onclick="playVideo('${escapeHtml(ep.url)}', '${escapeHtml(movie.title)} - ${escapeHtml(ep.name)}')">▶ پخش</button>` : ''}
+                                                ${ep.url ? `<a href="${escapeHtml(ep.url)}" class="download-badge" target="_blank">📥 دانلود</a>` : '<span class="download-badge" style="background:#442222;">به زودی</span>'}
+                                            </div>
+                                        </div>
                                     `).join('')}
                                 </div>
                             </div>
@@ -593,15 +742,32 @@
         }).join("");
     }
     
-    function toggleDropdown(header) {
-        const content = header.nextElementSibling;
-        const arrow = header.querySelector('.dropdown-arrow');
-        if (content.classList.contains('show')) {
-            content.classList.remove('show');
-            arrow.classList.remove('open');
+    // تابع جدید برای باز کردن فقط یک منو در هر بار
+    function toggleDropdown(header, dropdownId) {
+        // بستن تمام منوهای باز دیگر
+        const allDropdownContents = document.querySelectorAll('.dropdown-content');
+        const allDropdownArrows = document.querySelectorAll('.dropdown-arrow');
+        
+        // پیدا کردن منوی جاری
+        const currentContent = document.getElementById(dropdownId);
+        const currentArrow = header.querySelector('.dropdown-arrow');
+        
+        // اگر منوی جاری باز است، فقط آن را ببند
+        if (currentContent.classList.contains('show')) {
+            currentContent.classList.remove('show');
+            currentArrow.classList.remove('open');
         } else {
-            content.classList.add('show');
-            arrow.classList.add('open');
+            // بستن همه منوهای دیگر
+            allDropdownContents.forEach(content => {
+                content.classList.remove('show');
+            });
+            allDropdownArrows.forEach(arrow => {
+                arrow.classList.remove('open');
+            });
+            
+            // باز کردن منوی جاری
+            currentContent.classList.add('show');
+            currentArrow.classList.add('open');
         }
     }
     
