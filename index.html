@@ -318,13 +318,29 @@
 
         .dropdown-content {
             max-height: 0;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             transition: max-height 0.4s ease-out;
             background: rgba(25, 8, 8, 0.7);
         }
 
         .dropdown-content.show {
-            max-height: 500px;
+            max-height: 280px;
+        }
+
+        /* اسکرول بار زیبا */
+        .dropdown-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-track {
+            background: #2a0a0a;
+            border-radius: 4px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-thumb {
+            background: #cc0000;
+            border-radius: 4px;
         }
 
         .episode-link {
@@ -346,7 +362,7 @@
 
         .episode-name {
             flex: 1;
-            min-width: 80px;
+            min-width: 70px;
         }
 
         .episode-buttons {
@@ -356,14 +372,12 @@
 
         .play-btn {
             background: #2a7a2a;
-            padding: 3px 8px;
+            padding: 3px 10px;
             border-radius: 15px;
             font-size: 0.65rem;
             cursor: pointer;
             border: none;
             color: white;
-            text-decoration: none;
-            display: inline-block;
         }
 
         .play-btn:hover {
@@ -414,7 +428,6 @@
             cursor: pointer;
             background: none;
             border: none;
-            z-index: 2001;
         }
 
         .close-video:hover {
@@ -459,6 +472,9 @@
             }
             .episode-buttons {
                 margin-top: 5px;
+            }
+            .dropdown-content.show {
+                max-height: 220px;
             }
         }
     </style>
@@ -650,37 +666,25 @@
         renderMovies();
     }
 
-    // باز کردن پخش‌کننده ویدیو
     function playVideo(url, title) {
         const modal = document.getElementById("videoModal");
         const video = document.getElementById("my-video");
         
-        // اگر پلیر قبلی وجود داشت، dispose کن
         if (currentVideoPlayer) {
             currentVideoPlayer.dispose();
         }
         
-        // ساخت پلیر جدید
         currentVideoPlayer = videojs(video, {
             controls: true,
             autoplay: true,
             preload: "auto",
             fluid: true,
-            playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2],
-            controlBar: {
-                volumePanel: true,
-                playbackRateMenuButton: true
-            }
+            playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2]
         });
         
-        // تنظیم منبع ویدیو
         currentVideoPlayer.src({ src: url, type: "video/mp4" });
         currentVideoPlayer.load();
-        
-        // نمایش مودال
         modal.style.display = "flex";
-        
-        // پخش خودکار
         currentVideoPlayer.play();
     }
     
@@ -707,23 +711,22 @@
         
         grid.innerHTML = filteredMovies.map((movie, movieIndex) => {
             const hasValidEpisodes = movie.episodes && movie.episodes.length > 0;
-            // استفاده از id منحصر به فرد برای هر کارت
-            const dropdownId = `dropdown-${movie.id}-${movieIndex}`;
+            const uniqueId = `dropdown-${movie.id}-${movieIndex}`;
             
             return `
-                <div class="card" id="card-${movie.id}">
+                <div class="card" data-card-id="${movie.id}">
                     <div class="card-img">
                         <img src="${movie.image}" alt="${movie.title}" loading="lazy" onerror="this.src='https://placehold.co/500x700/1a0808/cc0000?text=No+Poster'">
                     </div>
                     <div class="card-content">
                         <div class="card-title">${escapeHtml(movie.title)}</div>
                         ${hasValidEpisodes ? `
-                            <div class="episodes-dropdown" data-dropdown="${dropdownId}">
-                                <div class="dropdown-header" onclick="toggleDropdown(this, '${dropdownId}')">
+                            <div class="episodes-dropdown">
+                                <div class="dropdown-header" onclick="toggleDropdown(this, '${uniqueId}')">
                                     <span>📥 لینک‌های دانلود و پخش</span>
                                     <span class="dropdown-arrow">▼</span>
                                 </div>
-                                <div class="dropdown-content" id="${dropdownId}">
+                                <div class="dropdown-content" id="${uniqueId}">
                                     ${movie.episodes.map(ep => `
                                         <div class="episode-link">
                                             <span class="episode-name">${escapeHtml(ep.name)}</span>
@@ -742,22 +745,17 @@
         }).join("");
     }
     
-    // تابع جدید برای باز کردن فقط یک منو در هر بار
     function toggleDropdown(header, dropdownId) {
-        // بستن تمام منوهای باز دیگر
         const allDropdownContents = document.querySelectorAll('.dropdown-content');
         const allDropdownArrows = document.querySelectorAll('.dropdown-arrow');
         
-        // پیدا کردن منوی جاری
         const currentContent = document.getElementById(dropdownId);
         const currentArrow = header.querySelector('.dropdown-arrow');
         
-        // اگر منوی جاری باز است، فقط آن را ببند
-        if (currentContent.classList.contains('show')) {
+        if (currentContent && currentContent.classList.contains('show')) {
             currentContent.classList.remove('show');
             currentArrow.classList.remove('open');
         } else {
-            // بستن همه منوهای دیگر
             allDropdownContents.forEach(content => {
                 content.classList.remove('show');
             });
@@ -765,9 +763,10 @@
                 arrow.classList.remove('open');
             });
             
-            // باز کردن منوی جاری
-            currentContent.classList.add('show');
-            currentArrow.classList.add('open');
+            if (currentContent) {
+                currentContent.classList.add('show');
+                currentArrow.classList.add('open');
+            }
         }
     }
     
