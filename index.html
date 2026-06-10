@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>دانلود فیلم و سریال</title>
-    <link href="https://vjs.zencdn.net/8.10.0/video-js.min.css" rel="stylesheet">
+    <!-- Plyr CSS -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <style>
         * {
             margin: 0;
@@ -259,7 +260,6 @@
             background: rgba(80, 30, 30, 0.7);
         }
 
-        /* گرید با ارتفاع یکسان برای همه کارت‌ها - راه حل اصلی مشکل */
         .movies-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
@@ -409,9 +409,9 @@
         }
 
         .play-btn {
-            background: rgba(30, 100, 30, 0.7);
+            background: rgba(30, 100, 30, 0.8);
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(80, 180, 80, 0.4);
+            border: 1px solid rgba(80, 180, 80, 0.5);
             padding: 4px 12px;
             border-radius: 30px;
             font-size: 0.65rem;
@@ -422,16 +422,16 @@
         }
 
         .play-btn:hover {
-            background: rgba(50, 140, 50, 0.9);
+            background: rgba(50, 140, 50, 1);
             transform: scale(1.02);
             border-color: #66ff66;
             color: white;
         }
 
         .download-badge {
-            background: rgba(180, 40, 40, 0.7);
+            background: rgba(180, 40, 40, 0.8);
             backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 80, 80, 0.4);
+            border: 1px solid rgba(255, 80, 80, 0.5);
             padding: 4px 12px;
             border-radius: 30px;
             font-size: 0.65rem;
@@ -443,7 +443,7 @@
         }
 
         .download-badge:hover {
-            background: rgba(220, 50, 50, 0.9);
+            background: rgba(220, 50, 50, 1);
             transform: scale(1.02);
             border-color: #ff6666;
             color: white;
@@ -459,6 +459,7 @@
             color: #aa8888;
         }
 
+        /* مودال پخش ویدیو */
         .video-modal {
             display: none;
             position: fixed;
@@ -474,8 +475,10 @@
 
         .video-modal-content {
             width: 90%;
-            max-width: 1000px;
+            max-width: 1100px;
             position: relative;
+            border-radius: 20px;
+            overflow: hidden;
         }
 
         .close-video {
@@ -489,6 +492,7 @@
             border: none;
             opacity: 0.7;
             transition: all 0.2s;
+            z-index: 2001;
         }
 
         .close-video:hover {
@@ -496,10 +500,20 @@
             color: #ff4444;
         }
 
-        .video-js {
-            width: 100%;
+        .video-title {
+            position: absolute;
+            top: -40px;
+            left: 10px;
+            color: #ffcc99;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
             border-radius: 20px;
-            overflow: hidden;
+            z-index: 2001;
+        }
+
+        .plyr {
+            border-radius: 16px;
         }
 
         .footer {
@@ -588,13 +602,13 @@
 <div id="videoModal" class="video-modal">
     <div class="video-modal-content">
         <button class="close-video" onclick="closeVideoPlayer()">✕</button>
-        <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto">
-            <source src="" type="video/mp4">
-        </video>
+        <div class="video-title" id="videoTitle"></div>
+        <video id="my-video" playsinline controls></video>
     </div>
 </div>
 
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+<!-- Plyr JS -->
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 <script>
     const USERS_LIST = [
         { username: "حمیدرضا", password: "CTF_22", role: "admin" },
@@ -643,8 +657,7 @@
             category: "iranian",
             image: "https://api2.filmzi.com/media/1001nights-poster-main-6947954d755a8b03beedfad2?w=1920&q=80",
             episodes: [
-                { name: "قسمت 1", url: "" },
-                { name: "قسمت 2", url: "" }
+                { name: "قسمت 28", url: "https://cf.linkulu.com/dl/6a2926266a48881ec0952df9" }
             ]
         },
         {
@@ -697,7 +710,7 @@
 
     let currentUser = null;
     let currentCategory = "iranian";
-    let currentVideoPlayer = null;
+    let currentPlayer = null;
 
     function filterMovies(category) {
         currentCategory = category;
@@ -709,31 +722,59 @@
 
     function playVideo(url, title) {
         const modal = document.getElementById("videoModal");
-        const video = document.getElementById("my-video");
+        const videoElement = document.getElementById("my-video");
+        const titleElement = document.getElementById("videoTitle");
         
-        if (currentVideoPlayer) currentVideoPlayer.dispose();
+        // تنظیم عنوان
+        titleElement.innerHTML = title;
         
-        currentVideoPlayer = videojs(video, {
-            controls: true,
+        // اگر پلیر قبلی وجود داشت، نابودش کن
+        if (currentPlayer) {
+            currentPlayer.destroy();
+            currentPlayer = null;
+        }
+        
+        // تنظیم منبع ویدیو
+        videoElement.src = url;
+        
+        // ساخت پلیر جدید با تنظیمات کامل
+        currentPlayer = new Plyr(videoElement, {
+            controls: [
+                'play', 'progress', 'current-time', 'duration',
+                'mute', 'volume', 'captions', 'settings',
+                'pip', 'airplay', 'fullscreen'
+            ],
+            settings: ['captions', 'quality', 'speed'],
+            speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 2] },
+            quality: { default: 720, options: [480, 720, 1080] },
+            invertTime: false,
             autoplay: true,
-            preload: "auto",
-            fluid: true,
-            playbackRates: [0.5, 0.75, 1, 1.25, 1.5, 2]
+            muted: false
         });
         
-        currentVideoPlayer.src({ src: url, type: "video/mp4" });
-        currentVideoPlayer.load();
+        // نمایش مودال
         modal.style.display = "flex";
-        currentVideoPlayer.play();
+        
+        // پخش خودکار
+        currentPlayer.play();
+        
+        // رویداد خطا
+        currentPlayer.on('error', function(event) {
+            console.error('خطا در پخش:', event);
+            alert('خطا در پخش ویدیو! ممکن است لینک معتبر نباشد.');
+        });
     }
     
     function closeVideoPlayer() {
-        if (currentVideoPlayer) {
-            currentVideoPlayer.pause();
-            currentVideoPlayer.dispose();
-            currentVideoPlayer = null;
+        const modal = document.getElementById("videoModal");
+        if (currentPlayer) {
+            currentPlayer.pause();
+            currentPlayer.destroy();
+            currentPlayer = null;
         }
-        document.getElementById("videoModal").style.display = "none";
+        const videoElement = document.getElementById("my-video");
+        videoElement.src = "";
+        modal.style.display = "none";
     }
 
     function renderMovies() {
@@ -824,6 +865,10 @@
     }
     
     function logout() {
+        if (currentPlayer) {
+            currentPlayer.destroy();
+            currentPlayer = null;
+        }
         currentUser = null;
         localStorage.removeItem("cinema_currentUser");
         document.getElementById("loginPage").style.display = "flex";
